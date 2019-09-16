@@ -1,6 +1,6 @@
 /*****************************************************************************************************************************************
-Author : 1) Atharv Desai
-         2) Suraj Thite
+Author : 1) Atharv Desai      (atharv.desai@colorado.edu)
+         2) Suraj Thite       (suraj.thite@colorado.edu)
 
 Problem Statement 1: Create a C program that will take as input a numeric value, a radix, and an operand size.  
 Your program will need to error check for invalid inputs. Radix values are limited to 8, 10, 16.  
@@ -44,7 +44,10 @@ void compute_signed_min3(int);
 char bin_prefix[] = "ob";
 int bin[16] = {0};
 int ones[16] = {0};
-int main()
+/***********************************************************************************************************************************/
+/* Function name: Main            Parameters: void             Description: Function from where execution of any C program begins. */
+/***********************************************************************************************************************************/
+int main(void)
 { 
     const int dataset[11][3] = {{-6, 10, 4}, {-6, 9, 4}, {-6, 10, 5}, {-9, 10, 4}, {237, 10, 8}, {125, 8, 8}, {0xEB, 16, 8}, {-125, 10, 8},  {65400, 10, 8}, {65400, 10, 16}, {-32701, 10, 16} };
     int i=0;
@@ -132,8 +135,10 @@ int main()
     }
     return 0;
 }
-
-void print_input(int val,int radix,int operand)        //Function for Printing Input values
+/***********************************************************************************************************************************/
+/* Function name: print _input         Parameters: Value,radix,operand       Description:Function for Printing Input values        */
+/***********************************************************************************************************************************/
+void print_input(int val,int radix,int operand)        
 {
  if(radix==8){
      printf("\nInput:\t\tValue:%o\t\tRadix:%d\t\tOperand Size:%d\t\t\n",val,radix,operand); //print octal input values
@@ -145,7 +150,10 @@ if(radix==10){
      printf("\nInput:\t\tValue:%d\t\tRadix:%d\t\tOperand Size:%d\t\t\n",val,radix,operand); //print other input values
        }   
 }
-   		
+/***********************************************************************************************************************************/
+/* Function name: decimal_bin         Parameters: Decimal value,operand       Description:Function to convert decimal to binary    */
+/***********************************************************************************************************************************/
+
 void decimal_bin(int num, int n)                       // Function to convert decimal values to binary
 {   
 	int binnum[n];
@@ -163,7 +171,9 @@ void decimal_bin(int num, int n)                       // Function to convert de
     }
     
 }
-
+/***********************************************************************************************************************************/
+/* Function name: compute_max      Parameters: operand    Description:to calculate the max binary value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_max(int n)                     //Function to calculate the maximum value in binary for the given operand size
    {
         int i;
@@ -181,7 +191,9 @@ void compute_max(int n)                     //Function to calculate the maximum 
                 printf("%d",max_value[i]);
             }
     }
-
+/***********************************************************************************************************************************/
+/* Function name: compute_min      Parameters: operand    Description:to calculate the min binary value for the given operand size */      
+/***********************************************************************************************************************************/
 
 void compute_min(int n)                      //Function to calculate the minimum value in binary for the given operand size
    {
@@ -199,6 +211,9 @@ void compute_min(int n)                      //Function to calculate the minimum
                 printf("%d",min_value[i]);
             }
 }
+/***********************************************************************************************************************************/
+/* Function name: compute_max_decimal     Parameters: operand    Description:to calculate the max value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_max_decimal(int n)              //Function to calculate the maximum value in decimal for the given operand size
  {
     int i;
@@ -209,8 +224,9 @@ void compute_max_decimal(int n)              //Function to calculate the maximum
     }
     printf("\t\t\t%-5d",max_value);
 }
-
-
+/***********************************************************************************************************************************/
+/* Function name: compute_max_hex     Parameters: operand    Description:to calculate the max hex value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_max_hex(int n)               //Function to calculate the maximum value in hex for the given operand size
     {   
         int i;
@@ -221,14 +237,18 @@ void compute_max_hex(int n)               //Function to calculate the maximum va
          }
     printf("\t\t\t0x%-1X",max_value);
     }
-
+/***********************************************************************************************************************************/
+/* Function name: compute_min_hex     Parameters: operand    Description:to calculate the min hex value for the given operand size */      
+/***********************************************************************************************************************************/
 
 void compute_min_hex(int n)                    //Function to calculate the minimum value in hex for the given operand size
     {   int i;
         unsigned short int min_value=0;
     printf("\t\t\t0x%-1X",min_value);
     }
-
+/***********************************************************************************************************************************/
+/* Function name: compute_max_oct     Parameters: operand     Description:to calculate  max octal value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_max_oct(int n)                   //Function to calculate the maximum value in octal for the given operand size
     {   int i;
         uint16_t max_value = 0;
@@ -237,25 +257,39 @@ void compute_max_oct(int n)                   //Function to calculate the maximu
            }
     printf("\t\t\t%1o",max_value);
     }
-
+/***********************************************************************************************************************************/
+/* Function name: compute_min_oct     Parameters: operand     Description:to calculate  min octal value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_min_oct(int n)                  //Function to calculate the minimum value in octal for the given operand size
     {   int i;
         unsigned short int min_value=0;
     printf("\t\t\t%-1o",min_value);
     }
+/***********************************************************************************************************************************/
+/* Function name: compute_min_dec     Parameters: None      Description:to calculate  min decimal value for the given operand size */      
+/***********************************************************************************************************************************/
 void compute_min_dec()                       //Function to calculate the minimum value in decimal for the given operand size
     {   int i;
         unsigned short int min_value=0;
     printf("\t\t\t%-1d",min_value);
     }
+/***********************************************************************************************************************************/
+/* Function name: compute_oct     Parameters: Decimal value        Description: to print octal value for the given decimal value   */      
+/***********************************************************************************************************************************/
 void compute_oct(int n)                      //Function to print our decimal value in octal
     {
     printf("\nOctal(abs):     %-1o",n);    
     }  
+/***********************************************************************************************************************************/
+/* Function name: compute_hex     Parameters: Decimal value        Description: to print hex value for the given decimal value     */      
+/***********************************************************************************************************************************/
 void compute_hex(int n)                      //Function to print our decimal value in hex
     {
     printf("\nHex(abs):       0x%-2X",n);    
     }   
+/***********************************************************************************************************************************/
+/* Function name: compute_ones   Parameters: Operand   Description:to calculate ones complement value by using array to store bits */      
+/***********************************************************************************************************************************/
 void compute_ones(int n)                     // Function to compute ones complement
 {
     int i=0;
@@ -267,8 +301,11 @@ void compute_ones(int n)                     // Function to compute ones complem
     for(i=0; i<n; i++)
         printf("%d",ones[i]);
 }
+/***********************************************************************************************************************************/
+/* Function name: compute_twos   Parameters: Operand   Description:to calculate twos complement value by using array to store bits */      
+/***********************************************************************************************************************************/
 void compute_twos(int n)                      // Function to compute twos complement 
-{
+{                                             // Reference: codeforwin.org/2015/08/c-program-to-find-twos-complement-of-binary-number.html
     
     int i;
     int add=0;
@@ -301,6 +338,9 @@ void compute_twos(int n)                      // Function to compute twos comple
         printf("%d",bintwo[i]);
 }
 }
+/*************************************************************************************************************************************/
+/* Function name: sign_magni   Parameters: Negative flag,Operand   Description:to calculate sign magnitude by checking negative flag */      
+/*************************************************************************************************************************************/
 void sign_magni(int neg,int n)               // Function to calculate signed magnitude
 {
     int i=0;
@@ -318,7 +358,9 @@ void sign_magni(int neg,int n)               // Function to calculate signed mag
         }
     }
 }
-
+/**************************************************************************************************************************************/
+/* Function name: compute_signed_max   Parameters: Operand   Description:to calculate max signed value by setting the array bits high */      
+/**************************************************************************************************************************************/
 void compute_signed_max( int x)            // Function to calculate signed max value
 	{
 		int max[x];
@@ -336,6 +378,9 @@ void compute_signed_max( int x)            // Function to calculate signed max v
             printf("%-d",max[i]);
         	}
 	}
+/*****************************************************************************************************************************************/
+/* Function name: compute_signed_min1   Parameters: Operand   Description:to calculate min ones complement by setting the array bits low */      
+/*****************************************************************************************************************************************/
 void compute_signed_min1( int x)                     // Function to calculate signed minimum value for ones complement
 	{
 		int min[x];
@@ -353,6 +398,9 @@ void compute_signed_min1( int x)                     // Function to calculate si
             printf("%-d",min[i]);
         	}
 	}
+/*****************************************************************************************************************************************/
+/* Function name: compute_signed_min2   Parameters: Operand   Description:to calculate min twos complement by setting the array bits low */      
+/*****************************************************************************************************************************************/
 void compute_signed_min2( int x)                   // Function to calculate signed minimum value for twos complement
 	{
 		int min[x];
@@ -371,7 +419,9 @@ void compute_signed_min2( int x)                   // Function to calculate sign
             printf("%-d",min[i]);
         	}
 	}
-
+/****************************************************************************************************************************************/
+/* Function name: compute_signed_min3   Parameters: Operand   Description:to calculate min sign magnitude by setting the array bits low */      
+/****************************************************************************************************************************************/
 void compute_signed_min3( int x)                   // Function to calculate signed minimum value for signed magnitude
 {
 		int min[x];
