@@ -1,6 +1,6 @@
 /************************************************************************************************************************************
-Author  1) Atharv Desai 
-        2) Suraj Thite  
+Author  1) Atharv Desai      (atharv.desai@colorado.edu)
+        2) Suraj Thite       (suraj.thite@colorado.edu)
        
 Problem Statement 2: Write a program that uses a logical expression that tests whether a given character code is a
       lower case 
@@ -13,6 +13,9 @@ Problem Statement 2: Write a program that uses a logical expression that tests w
 #include <stdio.h>
 #include <ctype.h>
 
+/***********************************************************************************************************************************/
+/* Function name: Main            Parameters: void             Description: Function from where execution of any C program begins. */
+/***********************************************************************************************************************************/
 int main(void)
 {
    int a[21]={66,114,117,99,101,32,83,97,121,115,32,72,105,33,7,9,50,48,49,57};    //Taking input
