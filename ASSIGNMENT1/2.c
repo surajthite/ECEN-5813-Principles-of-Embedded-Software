@@ -1,3 +1,15 @@
+/************************************************************************************************************************************
+Author  1) Atharv Desai 
+        2) Suraj Thite  
+       
+Problem Statement 2: Write a program that uses a logical expression that tests whether a given character code is a
+      lower case 
+      upper case 
+      digit 
+      white space (like null, backspace, space, tabs, etc.) 
+      or a special character (like ! or >) in ASCII.          
+***********************************************************************************************************************************/        
+        
 #include <stdio.h>
 #include <ctype.h>
 
@@ -29,7 +41,7 @@ int main(void)
      }
       if( isspace(a[i]) || a[i]==7)       //to check if the ASCII char indicates space
      {
-         printf("\n Code: %d \t \t Type: space \t \t \t ASCII char =space ",a[i]);
+         printf("\n Code: %d \t \t Type: space \t \t \t ASCII char =space ",a[i]);  
       }
 }
    printf(" \n");
