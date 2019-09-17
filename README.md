@@ -28,9 +28,9 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 2. The editor used to build the code is gedit version 2.3.8.1 on Linux Mint Machine. 
   
-3. To execute the executable file simply type ./<filename>.
+3. To execute the executable file simply type ./(filename).
   
-4. To compile and create executable file , type gcc <filename>.c -o <filename> -Wall - Werror -lm 
+4. To compile and create executable file , type gcc (filename).c -o (filename) -Wall - Werror -lm 
   
  
 
