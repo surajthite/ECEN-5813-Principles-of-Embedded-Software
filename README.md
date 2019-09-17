@@ -31,7 +31,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 3. To execute the executable file simply type ./(filename).
   
 4. To compile and create executable file , type gcc (filename).c -o (filename) -Wall - Werror -lm 
-  
+
+5. Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.    
  
 
 
