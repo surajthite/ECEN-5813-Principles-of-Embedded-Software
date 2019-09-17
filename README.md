@@ -8,10 +8,10 @@
  1. 1 ( Executable File for the First Program Assigned).
  2. 1.c ( C Source Code File for the First Program Assigned). 
  3. Program1Output.out ( Piped output from Executable file from the bash terminal). 
- 4  2 ( Executable File for the First Program Assigned).
+ 4.  2 ( Executable File for the First Program Assigned).
  5. 2.c ( C Source Code File for the First Program Assigned). 
  6. Program2Output.out ( Piped output from Executable file from the bash terminal).
- 7  3 ( Executable File for the First Program Assigned).
+ 7.  3 ( Executable File for the First Program Assigned).
  8. 3.c ( C Source Code File for the First Program Assigned). 
  9. Program3Output.out ( Piped output from Executable file from the bash terminal).
  10.Project1.pdf ( Project Objectives Assigned  in pdf Format).
