@@ -17,7 +17,7 @@
  10.Project1.pdf ( Project Objectives Assigned  in pdf Format).
  11.Project1-PES2019.pdf ( Codes in pdf format with their console output).
  
-# INSTALLATION AND EXECTUION NOTES 
+# INSTALLATION AND EXECUTION NOTES 
   
 1. This code is build and tested on enviornment mentioned below
   
