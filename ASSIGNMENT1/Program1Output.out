@@ -1,0 +1,92 @@
+
+Input:				Value:-6				Radix:10				Operand Size:4		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b0110					0b1111					0b0000
+Dec(abs):			6						15   					0
+Octal(abs):			6						17						0
+Hex(abs):			0x6 					0xF						0x0
+1's Complement		0b1001					0b0111					0b1000
+2's Complement		0b1010					0b0111					0b1001
+Sign magnitude		0b1110					0b0111					0b1111
+
+ Error: Radix value is wrong for the input set  -6 9 4 
+Radix value should be 8,10 or 16 but here it's 9 
+
+Input:		Value:-6		Radix:10		Operand Size:5		
+
+ Error: Operand value is wrong for the input set -6 10 5 
+Operand value should be 4,8 or 16 but here it's 5 
+
+Input:				Value:-9				Radix:10				Operand Size:4		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b1001					0b1111					0b0000
+Dec(abs):			9						15   					0
+Octal(abs):			11						17						0
+Hex(abs):			0x9 					0xF						0x0
+1's Complement		Error					0b0111					0b1000
+2's Complement		Error					0b0111					0b1001
+Sign magnitude		Error					0b0111					0b1111
+
+Input:				Value:237				Radix:10				Operand Size:8		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b11101101				0b11111111				0b00000000
+Dec(abs):			237						255  					0
+Octal(abs):			355						377						0
+Hex(abs):			0xED					0xFF					0x0
+1's Complement		Error					0b01111111				0b10000000
+2's Complement		Error					0b01111111				0b10000001
+Sign magnitude		Error					0b01111111				0b11111111
+
+Input:				Value:175				Radix:8					Operand Size:8		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b01111101				0b11111111				0b00000000
+Dec(abs):			125						255  					0
+Octal(abs):			175						377						0
+Hex(abs):			0x7D					0xFF					0x0
+1's Complement		0b10000010				0b01111111				0b10000000
+2's Complement		0b10000011				0b01111111				0b10000001
+Sign magnitude		0b01111101				0b01111111				0b11111111
+
+Input:				Value:eb				Radix:16				Operand Size:8		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b11101011				0b11111111				0b00000000
+Dec(abs):			235						255  					0
+Octal(abs):			353						377						0
+Hex(abs):			0xEB					0xFF					0x0
+1's Complement		Error					0b01111111				0b10000000
+2's Complement		Error					0b01111111				0b10000001
+Sign magnitude		Error					0b01111111				0b11111111
+
+Input:				Value:-125				Radix:10				Operand Size:8		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b01111101				0b11111111				0b00000000
+Dec(abs):			125						255  					0
+Octal(abs):			175						377						0
+Hex(abs):			0x7D					0xFF					0x0
+1's Complement		0b10000010				0b01111111				0b10000000
+2's Complement		0b10000011				0b01111111				0b10000001
+Sign magnitude		0b11111101				0b01111111				0b11111111
+
+Input:				Value:65400				Radix:10				Operand Size:8		
+
+ Error since operand size limit exceeded
+
+Input:				Value:65400				Radix:10				Operand Size:16		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b1111111101111000		0b1111111111111111		0b0000000000000000
+Dec(abs):			65400					65535					0
+Octal(abs):			177570					177777					0
+Hex(abs):			0xFF78					0xFFFF					0x0
+1's Complement		Error					0b0111111111111111		0b1000000000000000
+2's Complement		Error					0b0111111111111111		0b1000000000000001
+Sign magnitude		Error					0b0111111111111111		0b1111111111111111
+
+Input:				Value:-32701			Radix:10				Operand Size:16		
+Output:				Value					Maximum					Minimum		
+Binary(abs)			0b0111111110111101		0b1111111111111111		0b0000000000000000
+Dec(abs):			32701					65535					0
+Octal(abs):			77675					177777					0
+Hex(abs):			0x7FBD					0xFFFF					0x0
+1's Complement		0b1000000001000010		0b0111111111111111		0b1000000000000000
+2's Complement		0b1000000001000011		0b0111111111111111		0b1000000000000001
+Sign magnitude		0b1111111110111101		0b0111111111111111		0b1111111111111111

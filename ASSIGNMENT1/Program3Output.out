@@ -1,0 +1,13 @@
+
+ Hex value CAFE
+ Binary value is: 1100101011111110
+ Condition--> 3 of last 4 bits high--True
+ Hex value FECA
+ Binary value is: 1111111011001010
+ Condition--> 3 of last 4 bits high--False
+ Hex value ECAF
+ Binary value is: 1110110010101111
+ Condition--> 3 of last 4 bits high--True
+ Hex value AFEC
+ Binary value is: 1010111111101100
+ Condition--> 3 of last 4 bits high--False
