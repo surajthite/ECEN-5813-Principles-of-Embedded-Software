@@ -35,4 +35,10 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 4. To compile and create executable file , type gcc (filename).c -o (filename) -Wall - Werror -lm 
 
 5. Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.    
+
+6.  To execute the executable file simply type ./(filename) in linux gcc environment while click on debug (bug icon) and then resume button to execute the file on MCUXpresso.
+
+7.  Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.
+8.  The MakeFile for the code of the whole project was developed and built on MCUXpresso IDE with all build options and flags mandatory to execute and build the project.
+ 
  
