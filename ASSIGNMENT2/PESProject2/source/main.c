@@ -121,6 +121,7 @@ int main(void)
 		}
 		else
 		{
+			RGB_OFF();	//Switch LED off
 			status_print_0ff();//Switch to led state according to the data array
 			time_last_event= delay(time[i]);//Return value for no of loops executed for previous delay
 			PRINTF("%d  ",time_last_event);	//Print no of cycles executed for previous state.
