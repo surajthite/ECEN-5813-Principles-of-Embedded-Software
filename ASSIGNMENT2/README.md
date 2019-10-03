@@ -1,44 +1,46 @@
-# PES PROJECT - 1 README FILE 
+# PES PROJECT - 2 README FILE 
   Team Members :  Atharv Desai (atharv.desai@colorado.edu)
                   Suraj Thite (suraj.thite@colorado.edu)
- This is a readme file for the first project assignment in the Principles of Embedded Software Course for FALL '19. 
+ This is a readme file for the second project assignment in the Principles of Embedded Software Course for FALL '19. 
  
  The below enumerated files are contained in the repository 
-   
- 1. 1 ( Executable File for the First Program Assigned).
- 2. 1.c ( C Source Code File for the First Program Assigned). 
- 3. Program1Output.out ( Piped output from Executable file from the bash terminal). 
- 4.  2 ( Executable File for the First Program Assigned).
- 5. 2.c ( C Source Code File for the First Program Assigned). 
- 6. Program2Output.out ( Piped output from Executable file from the bash terminal).
- 7.  3 ( Executable File for the First Program Assigned).
- 8. 3.c ( C Source Code File for the First Program Assigned). 
- 9. Program3Output.out ( Piped output from Executable file from the bash terminal).
- 10. Project1.pdf ( Project Objectives Assigned  in pdf Format).
- 11. Project1-PES2019.pdf ( Codes in pdf format with their console output).
- 12. Program1Out.pdf ( PDF file for the Output of First Program).
- 13. README.md (Readme Markdown File)
- 
+ 1.	PES_PROJECT2
+    i)	Project Settings
+    ii)	Build Targets
+    iii)	Binaries
+    iv)	Includes
+    v)	CMSIS
+    vi)	Board
+    vii)	Drivers
+    viii)	Source
+    ix)	Startup
+    x)	Utilities
+    xi)	Debug
+    xii)	Doc
+    xiii)	linkerfile.ld
+    xiv)	makefile
+    xv)	PESProject2 PE Debug.launch
+2.	WBS Atharv & Suraj
+3.	Updated WBS Atharv & Suraj
+4.	Readme File (Readme Markdown File)
+
 # INSTALLATION AND EXECUTION NOTES 
   
-1. This code is build and tested on enviornment mentioned below
-  
-gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-2. The editor used to build the code is gedit version 2.3.8.1 on Linux Mint Machine. 
-  
-3. To execute the executable file simply type ./(filename).
-  
-4. To compile and create executable file , type gcc (filename).c -o (filename) -Wall - Werror -lm 
-
-5. Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.    
-
-6.  To execute the executable file simply type ./(filename) in linux gcc environment while click on debug (bug icon) and then resume button to execute the file on MCUXpresso.
-
-7.  Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.
-8.  The MakeFile for the code of the whole project was developed and built on MCUXpresso IDE with all build options and flags mandatory to execute and build the project.
+ The code is tested on the enviornment below: 
  
+ 1. MCUXpresso IDE which is an easy to use Eclipse-based development environment for NXP® MCUs based on Arm® Cortex®-M cores. Fb_debug and fb_run modules were compiled and executed on this IDE.
  
+ 2. MCUXpresso IDE which is an easy to use Eclipse-based development environment for NXP® MCUs based on Arm® Cortex®-M cores. Fb_debug and fb_run modules were compiled and executed on this IDE.
+ 
+ 3.	The MakeFile for the code of the whole project was developed and built on MCUXpresso IDE with all build options and flags mandatory to execute and build the project.
+ 
+ 4.	The hardware used in this project was FRDM-KL25Z board which  has been designed by NXP and built  on ARM® Cortex™-M0+ processor. 
+ 
+ 5. The editor used to build the code is gedit version 2.3.8.1 on Linux Mint Machine.
+ 
+ 6. To execute the executable file simply type ./(filename) in linux gcc environment while click on debug (bug icon) and then resume button to execute the file on MCUXpresso.
+ 
+ 7. To compile and create executable file in linux environment , type gcc (filename).c -o (filename) -Wall - Werror -lm
+ 
+ 8. Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.
