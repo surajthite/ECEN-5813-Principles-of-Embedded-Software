@@ -9,7 +9,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "memory.h"
-
+#include "RGBled.h"
+#include "pattern.h"
 uint32_t  *ptr;
 uint32_t *last_ptr;
 int i;
@@ -139,21 +140,21 @@ mem_status write_pattern(uint32_t * loc, size_t length, uint8_t seed)
 }
 
 /////////////////Pattern Generator ///////////////////////////
-void gen_pattern(uint32_t * pattern, size_t length, int8_t seed)
-{
-
-	uint32_t lfsr = 0x1111ACE1;
-	uint32_t bit;
-	for (uint32_t i =0 ; i< length ; i++)
-	{
-		bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
-
-		lfsr =  (lfsr >> 1) | (bit << 31);
-		lfsr = (uint32_t)lfsr;
-		*(pattern+i)= lfsr+ (uint32_t)(seed*i*1234);
-		//return pattern;
-	}
-}
+//void gen_pattern(uint32_t * pattern, size_t length, int8_t seed)
+//{
+//
+//	uint32_t lfsr = 0x1111ACE1;
+//	uint32_t bit;
+//	for (uint32_t i =0 ; i< length ; i++)
+//	{
+//		bit  = ((lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5) ) & 1;
+//
+//		lfsr =  (lfsr >> 1) | (bit << 31);
+//		lfsr = (uint32_t)lfsr;
+//		*(pattern+i)= lfsr+ (uint32_t)(seed*i*1234);
+//		//return pattern;
+//	}
+//}
 
 uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 {
@@ -178,7 +179,6 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 			//return ptr2;
 			temp1 = loc;
 			p=loc;
-			//printf(" \n \n Location : %p",temp1);
 
 		}
 		loc ++;
@@ -191,10 +191,16 @@ uint32_t * verify_pattern(uint32_t * loc, size_t length, int8_t seed)
 	//	printf("\n \r Memory Freed which was used for verification");
 }
 
-void mem_status_write_pattern_array(uint32_t * loc, size_t length, uint8_t seed)
+//void mem_status_write_pattern_array(uint32_t * loc, size_t length, uint8_t seed)
+//{
+//	uint32_t *temp1 =loc;
+//	gen_pattern(temp1,length,seed);
+//
+//}
+
+uint32_t * get_address(uint32_t  offset)
 {
-	uint32_t *temp1 =loc;
-	gen_pattern(temp1,length,seed);
-
+	uint32_t *temp;
+	temp = ptr + offset;
+	return (temp);
 }
-

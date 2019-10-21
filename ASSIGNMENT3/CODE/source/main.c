@@ -1,6 +1,5 @@
 
 #include "main.h"
-#include "memory.h"
 #include "RGBled.h"
 
 int main(void) {
@@ -56,7 +55,7 @@ int main(void) {
 
 	led_switch(0);
 	mem_status res1;
-	res1 = write_memory(ptr1+1, 0xFFEE);
+	res1 = write_memory(get_address(1), 0xFFEE);
 	if (res1==SUCCESS)  printf(" \n \r RESPONSE : SUCCESS");
 	else printf("\n \r RESPONSE : FAILED");
 
@@ -95,7 +94,7 @@ int main(void) {
 
 	led_switch(0);
 	ptr2=NULL;
-	ptr2 = verify_pattern(ptr1,4,5);
+	ptr2 = verify_pattern(get_address(0),4,5);
 	if(ptr2 != NULL)
 	{
 		printf("\n \r Different value found at location %p",ptr2);
@@ -109,7 +108,7 @@ int main(void) {
 
 	led_switch(0);
 	mem_status res2;
-	res2 = invert_block(ptr1+0,1);
+	res2 = invert_block(get_address(0),1);
 	if (res2==SUCCESS)  printf(" \n \r RESPONSE : SUCCESS");
 	else printf("\n \r RESPONSE : FAILED");
 
@@ -134,7 +133,7 @@ int main(void) {
 
 	led_switch(0);
 	mem_status res3;
-	res3 = invert_block(ptr1+0,1);
+	res3 = invert_block(get_address(0),1);
 	if (res3==SUCCESS)  printf(" \n \r RESPONSE : SUCCESS");
 	else printf("\n \r RESPONSE : FAILED");
 

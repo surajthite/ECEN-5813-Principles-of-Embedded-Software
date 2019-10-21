@@ -1,9 +1,8 @@
-memory.c:17:12:allocate_words	16	static
-memory.c:41:6:free_mem	16	static
-memory.c:57:11:display_mem	24	static
-memory.c:70:12:write_memory	32	static
-memory.c:92:12:invert_block	32	static
-memory.c:116:12:write_pattern	40	static
-memory.c:142:6:gen_pattern	40	static
-memory.c:158:12:verify_pattern	80	dynamic
-memory.c:194:6:mem_status_write_pattern_array	32	static
+memory.c:18:12:allocate_words	16	static
+memory.c:42:6:free_mem	16	static
+memory.c:58:11:display_mem	24	static
+memory.c:71:12:write_memory	32	static
+memory.c:93:12:invert_block	32	static
+memory.c:117:12:write_pattern	40	static
+memory.c:159:12:verify_pattern	80	dynamic
+memory.c:201:12:get_address	24	static
