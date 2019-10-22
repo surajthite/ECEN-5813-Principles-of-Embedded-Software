@@ -1,0 +1,11 @@
+unitTest.c:22:13:test_memory_allocation_limits	16	static
+unitTest.c:39:13:test_equal_data	16	static
+unitTest.c:55:13:test_bit0_set	16	static
+unitTest.c:74:13:test_bit32_set	16	static
+unitTest.c:92:13:test_bit0_clear	16	static
+unitTest.c:110:13:test_bit32_clear	16	static
+unitTest.c:129:13:check_whether_32_bit	16	static
+unitTest.c:146:13:check_whether_16_bit	16	static
+unitTest.c:165:13:check_whether_8_bit	16	static
+unitTest.c:184:13:check_inversion	16	static
+unitTest.c:201:7:Testsuite_RunTests	8	static

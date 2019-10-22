@@ -5,27 +5,36 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/RGBled.c \
+../source/System.c \
+../source/logger.c \
 ../source/main.c \
 ../source/memory.c \
 ../source/mtb.c \
 ../source/pattern.c \
-../source/semihost_hardfault.c 
+../source/semihost_hardfault.c \
+../source/unitTest.c 
 
 OBJS += \
 ./source/RGBled.o \
+./source/System.o \
+./source/logger.o \
 ./source/main.o \
 ./source/memory.o \
 ./source/mtb.o \
 ./source/pattern.o \
-./source/semihost_hardfault.o 
+./source/semihost_hardfault.o \
+./source/unitTest.o 
 
 C_DEPS += \
 ./source/RGBled.d \
+./source/System.d \
+./source/logger.d \
 ./source/main.d \
 ./source/memory.d \
 ./source/mtb.d \
 ./source/pattern.d \
-./source/semihost_hardfault.d 
+./source/semihost_hardfault.d \
+./source/unitTest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

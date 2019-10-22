@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+//Function to generate pattern for storing and verification purpose.
 void mem_status_write_pattern_array(uint32_t * loc, size_t length, uint8_t seed);
 void gen_pattern(uint32_t * pattern, size_t length, int8_t seed);
 

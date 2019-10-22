@@ -6,8 +6,9 @@ source/main.o source/main.d: ../source/main.c ../source/main.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
- ../utilities/fsl_debug_console.h ../source/memory.h ../source/pattern.h \
- ../source/RGBled.h
+ ../utilities/fsl_debug_console.h ../source/memory.h ../source/logger.h \
+ ../source/pattern.h ../source/RGBled.h ../source/unitTest.h \
+ ../source/System.h
 
 ../source/main.h:
 
@@ -51,6 +52,12 @@ source/main.o source/main.d: ../source/main.c ../source/main.h \
 
 ../source/memory.h:
 
+../source/logger.h:
+
 ../source/pattern.h:
 
 ../source/RGBled.h:
+
+../source/unitTest.h:
+
+../source/System.h:
