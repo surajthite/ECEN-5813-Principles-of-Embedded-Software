@@ -32,7 +32,7 @@ xii)	PESProject3 PE Debug.launch
 
 
 
-
+# INSTALLATION & EXECUTION NOTES
 #INSTALLATION & EXECUTION NOTES
 The code is tested on the enviornment below:
 1.	MCUXpresso IDE which is an easy to use Eclipse-based development environment for NXP® MCUs based on Arm® Cortex®-M cores. Fb_debug and fb_run modules were compiled and executed on this IDE.
@@ -48,7 +48,7 @@ The code is tested on the enviornment below:
 11.	Using Drawio online tool, we made UML sequence diagram and UML activity diagram for demonstrating the flow of memory test cases.
 12. Kindly use the make file in the linux build make folder in the repository to build the project in linux enviornment.
 
-#CHALLENGES
+# CHALLENGES
 1. The pattern verify function needs to generate pattern out of allocated memory block. Hence it could not enter the pattern generate function at the memory block.Hence new function without memory bounds checking has been incorporated.
 2.The printf function could not be aligned in the memroy tests since each function in the System.h and other related files pulled from github could be modified.
 3. The memory tests suite has been incorporated just after the execution of assigned  functional tests.
