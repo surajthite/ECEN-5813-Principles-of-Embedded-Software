@@ -2,7 +2,7 @@
  * pattern.c
  *
  *  Created on: Oct 21, 2019
- *      Author: AKSHAY THITE
+ *      Author: SURAJ THITE
  */
 
 #include "pattern.h"
