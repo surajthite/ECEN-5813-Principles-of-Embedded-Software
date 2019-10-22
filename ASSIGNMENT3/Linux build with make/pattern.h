@@ -2,7 +2,7 @@
  * pattern.h
  *
  *  Created on: Oct 21, 2019
- *      Author: AKSHAY THITE
+ *      Author: SURAJ THITE
  */
 
 #ifndef PATTERN_H_
