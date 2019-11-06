@@ -1,0 +1,9 @@
+state_machine.c:32:6:state_machine_1	24	static
+state_machine.c:223:6:state_machine_2	32	static
+state_machine.c:247:8:state_transition__in_table	32	static
+state_machine.c:272:8:POST_STATE	8	static
+state_machine.c:289:8:I2C_READ_TEMPERATURE_STATE	24	static
+state_machine.c:325:8:AVERAGE_WAIT_STATE	24	static
+state_machine.c:369:8:TMEP_ALERT_STATE	24	static
+state_machine.c:394:8:DISCONNECTED_STATE	8	static
+state_machine.c:411:8:END_STATE	8	static

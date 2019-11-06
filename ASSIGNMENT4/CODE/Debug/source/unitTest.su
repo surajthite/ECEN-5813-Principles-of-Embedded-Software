@@ -1,0 +1,11 @@
+unitTest.c:22:13:test_temp_range	16	static
+unitTest.c:41:13:test_temp_zero	16	static
+unitTest.c:57:13:test_temp_return_value	16	static
+unitTest.c:75:13:test_temp_high_register_val	16	static
+unitTest.c:91:13:test_low_register_val	16	static
+unitTest.c:108:13:test_config_rgister	24	static
+unitTest.c:125:13:test_config_rgister_MSB	24	static
+unitTest.c:142:13:test_config_rgister_LSB	24	static
+unitTest.c:158:13:test_config_rgister_extended_mode	24	static
+unitTest.c:175:13:test_config_rgister_alert_bit	24	static
+unitTest.c:189:7:Testsuite_RunTests	8	static
