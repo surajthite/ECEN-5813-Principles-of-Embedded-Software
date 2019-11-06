@@ -1,2 +1,0 @@
-pattern.c:16:6:mem_status_write_pattern_array	32	static
-pattern.c:29:6:gen_pattern	40	static

@@ -1,6 +1,0 @@
-logger.c:16:6:Log_integer	16	static
-logger.c:30:6:Log_string	16	static
-logger.c:45:6:Log_data	24	static
-logger.c:70:6:Log_enable	8	static
-logger.c:82:6:Log_disable	8	static
-logger.c:94:9:Log_status	8	static
