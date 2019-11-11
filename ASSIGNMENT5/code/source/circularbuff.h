@@ -21,10 +21,21 @@ uint8_t count;	//no of elements used in the circular buffer
 
 typedef enum
 {
-Buffer_Full,
-Buffer_Empty,
-Success,
-Null_Error,
+	SUCCESS,
+	FAIL,
+	Allocate_Free,
+	Invalid_Pointer,
+	Non_Initialized_Buffer,
+	Added,
+	Removed,
+	Buffer_Full,
+	Buffer_Not_Full,
+	Buffer_Empty,
+	Buffer_Not_Empty,
+	Wrap_Add,
+	Wrap_Remove,
+	Over_Fill,
+	Over_Empty,
 }cbuff_status;
 
 
