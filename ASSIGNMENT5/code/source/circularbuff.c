@@ -26,7 +26,7 @@ int8_t cbuff_init(cbuff* ptr,uint16_t length)
 		ptr->tail = ptr->buffer;
 		ptr->size = length;
 		ptr->count = 0;
-		return Allocate_Free;
+		return allocated_free;
 	}
 }
 
@@ -44,20 +44,20 @@ uint8_t cbuff_add(cbuff* ptr,uint8_t data)
 	if(ptr ==NULL)
 		return FAIL;
 	else if(ptr->count ==ptr->size)
-		return Over_Fill;
+		return over_fill;
 	else if(ptr->head == ptr->cbuffptr + ptr->size -1)
 	{
 		*ptr->head =add;
 		ptr->head = ptr->cbuffptr;
 		ptr->count++;
-		return Wrap_Add;
+		return wrap_Add;
 	}
 	else
 	{
 		*ptr ->head =add;
 		ptr->head ++;
 		ptr->count++;
-		return Added;
+		return added;
 	}
 }
 
@@ -75,21 +75,21 @@ uint8_t cbuff_remove(cbuff* ptr,uint8_t* store)
 		return FAIL;
 	else if(cbuff_is_empty(ptr)== Buffer_Empty)
 	{
-		return Over_empty;
+		return over_empty;
 	}
 	else if(ptr->tail ==ptr->cbuffptr + ptr->size -1)
 	{
 		store = *ptr->tail;
 		ptr->tail = ptr->cbuffptr;
 		ptr->count--;
-		return Wrap_Remove;
+		return wrap_Remove;
 	}
 	else
 	{
 		store = *ptr->tail;
 		ptr->tail++;
 		ptr->count--;
-		return Removed;
+		return removed;
 	}
 }
 
@@ -105,9 +105,9 @@ uint8_t cbuff_is_full(cbuff* ptr)
 	if(ptr==NULL)
 	{	return FAIL;	}
 	else if (ptr->count == ptr->size)
-	{	return Buffer_Full;	}
+	{	return buffer_full;	}
 	else
-	{	return Buffer_Not_Full;	}
+	{	return buffer_not_full;	}
 }
 
 /*******************************************************************************************************
@@ -123,11 +123,11 @@ uint8_t cbuff_is_empty(cbuff* ptr)
 		return FAIL;
 	else if(ptr->count ==0)
 	{
-		return Buffer_Empty;
+		return buffer_empty;
 	}
 	else
 	{
-		return Buffer_Not_Empty;
+		return buffer_not_empty;
 	}
 }
 
@@ -147,7 +147,7 @@ uint8_t cbuff_destroy(cbuff* ptr)
 	else
 	{
 		free(ptr->cbuffptr);
-		return Success;
+		return SUCCESS;
 	}
 }
 
