@@ -8,6 +8,6 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-
+#include "circularbuff.h"
 
 #endif /* MAIN_H_ */

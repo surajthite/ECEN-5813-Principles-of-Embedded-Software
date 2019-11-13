@@ -27,7 +27,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- 
+
 /**
  * @file    PES_ASSIGNMENT5.c
  * @brief   Application entry point.
@@ -39,6 +39,7 @@
 #include "clock_config.h"
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
+#include "circularbuff.h"
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -48,13 +49,35 @@
  */
 int main(void) {
 
-  	/* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitBootPeripherals();
-  	/* Init FSL debug console. */
-    BOARD_InitDebugConsole();
+	/* Init board hardware. */
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
+	/* Init FSL debug console. */
+	BOARD_InitDebugConsole();
+
+	cbuff* a ;
+	a= malloc(sizeof(cbuff));
+	a->cbuffptr = malloc(sizeof(int8_t) * 10);
+	cbuff_init(a,10);
+
+	for (int i=0;i<5;i++)
+	{
+		cbuff_add(a,i);
+	}
+	cbuff_print(a);
+	printf("\n \r \n \n\n");
+	cbuff_status s;
+	int8_t sar =0;
+	s=cbuff_remove(a,sar);
+	cbuff_print(a);
+	printf("\n \r \n \n\n");
+	cbuff_add(a,5);
+	cbuff_print(a);
+	printf("\n \r \n \n\n");
+	s=cbuff_remove(a,sar);
+	cbuff_print(a);
 
 
-    return 0 ;
+	return 0 ;
 }

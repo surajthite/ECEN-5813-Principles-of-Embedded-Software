@@ -7,15 +7,17 @@
 
 #ifndef CIRCULARBUFF_H_
 #define CIRCULARBUFF_H_
+#include "stdint.h"
+#include "stdio.h"
 
 typedef struct
 {
-uint8_t* cbuffptr; // base of the circular buffer
-uint8_t* head;	//head of the circular buffer
-uint8_t* tail;	//tail of the circular buffer
-uint8_t* size;	// maximum size of the circular buffer
-uint8_t length;	//Length of the circular buffer
-uint8_t count;	//no of elements used in the circular buffer
+int8_t* cbuffptr; // base of the circular buffer
+int8_t* head;	//head of the circular buffer
+int8_t* tail;	//tail of the circular buffer
+int8_t  size;	// maximum size of the circular buffer
+//int8_t length;	//Length of the circular buffer
+int8_t count;	//no of elements used in the circular buffer
 }cbuff;
 
 
@@ -38,6 +40,13 @@ typedef enum
 	over_empty,
 }cbuff_status;
 
+int8_t cbuff_init(cbuff* ptr,int8_t length);
+uint8_t cbuff_add(cbuff* ptr,uint8_t data);
+uint8_t cbuff_remove(cbuff* ptr,uint8_t store);
+uint8_t cbuff_is_full(cbuff* ptr);
+uint8_t cbuff_is_empty(cbuff* ptr);
+uint8_t cbuff_destroy(cbuff* ptr);
 
+void cbuff_print(cbuff* ptr);
 
 #endif /* CIRCULARBUFF_H_ */

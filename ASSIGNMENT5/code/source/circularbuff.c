@@ -13,7 +13,7 @@
  * @Return : status codes
  *******************************************************************************************************/
 
-int8_t cbuff_init(cbuff* ptr,uint16_t length)
+int8_t cbuff_init(cbuff* ptr,int8_t length)
 {
 	if(ptr->cbuffptr == NULL || length < 0)
 	{
@@ -21,9 +21,9 @@ int8_t cbuff_init(cbuff* ptr,uint16_t length)
 	}
 	else
 	{
-		ptr->cbuffptr =(int8_t *)malloc(sizeof(int8_t)*length)
-		ptr->head = ptr->buffer;
-		ptr->tail = ptr->buffer;
+		ptr->cbuffptr=(int8_t *)malloc(sizeof(int8_t)*length);
+		ptr->head = ptr->cbuffptr;
+		ptr->tail = ptr->cbuffptr;
 		ptr->size = length;
 		ptr->count = 0;
 		return allocated_free;
@@ -45,18 +45,18 @@ uint8_t cbuff_add(cbuff* ptr,uint8_t data)
 		return FAIL;
 	else if(ptr->count ==ptr->size)
 		return over_fill;
-	else if(ptr->head == ptr->cbuffptr + ptr->size -1)
+	else if(ptr->head == ptr->cbuffptr + ptr->size - 1)
 	{
-		*ptr->head =add;
+		*ptr->head =data;
 		ptr->head = ptr->cbuffptr;
 		ptr->count++;
 		return wrap_Add;
 	}
 	else
 	{
-		*ptr ->head =add;
-		ptr->head ++;
-		ptr->count++;
+		*ptr->head =data;
+		(ptr->head)++;
+		(ptr->count)++;
 		return added;
 	}
 }
@@ -69,11 +69,11 @@ uint8_t cbuff_add(cbuff* ptr,uint8_t data)
  * @Return :status codes
  *******************************************************************************************************/
 
-uint8_t cbuff_remove(cbuff* ptr,uint8_t* store)
+uint8_t cbuff_remove(cbuff* ptr,uint8_t store)
 {
 	if(ptr==NULL)
 		return FAIL;
-	else if(cbuff_is_empty(ptr)== Buffer_Empty)
+	else if(cbuff_is_empty(ptr)== buffer_empty)
 	{
 		return over_empty;
 	}
@@ -81,14 +81,14 @@ uint8_t cbuff_remove(cbuff* ptr,uint8_t* store)
 	{
 		store = *ptr->tail;
 		ptr->tail = ptr->cbuffptr;
-		ptr->count--;
+		(ptr->count)--;
 		return wrap_Remove;
 	}
 	else
 	{
 		store = *ptr->tail;
-		ptr->tail++;
-		ptr->count--;
+		(ptr->tail)++;
+		(ptr->count)--;
 		return removed;
 	}
 }
@@ -152,15 +152,19 @@ uint8_t cbuff_destroy(cbuff* ptr)
 }
 
 /*******************************************************************************************************
- * Function Name: cbuff_verify_init(cbuff* ptr)
- * Description : This function verifies whether pointer to cbuffer is initialized or not
+ * Function Name: cbuff_print
+ * Description : This function prints the elements of circular buffer
  * @input: pointer to a structure
  * @Return : status codes
  *******************************************************************************************************/
-
-uint8_t cbuff_verify_init(cbuff* ptr)
+void cbuff_print(cbuff* ptr)
 {
-
+	int8_t *temp = ptr->tail;
+	for (int i=0;i<ptr->count;i++)
+	{
+		printf("\n \r %d",*temp);
+		temp++;
+	}
 }
 
 

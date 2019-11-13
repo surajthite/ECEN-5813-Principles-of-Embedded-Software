@@ -1,0 +1,7 @@
+circularbuff.c:16:8:cbuff_init	16	static
+circularbuff.c:42:9:cbuff_add	16	static
+circularbuff.c:72:9:cbuff_remove	16	static
+circularbuff.c:103:9:cbuff_is_full	16	static
+circularbuff.c:120:9:cbuff_is_empty	16	static
+circularbuff.c:141:9:cbuff_destroy	16	static
+circularbuff.c:160:6:cbuff_print	24	static
