@@ -6,6 +6,7 @@
  */
 
 #include "main.h"
+/*
 #include <stdio.h>
 #include "board.h"
 #include "peripherals.h"
@@ -13,13 +14,8 @@
 #include "clock_config.h"
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
-/* TODO: insert other include files here. */
+*/
 
-/* TODO: insert other definitions and declarations here. */
-
-/*
- * @brief   Application entry point.
- */
 int main(void) {
 
   	/* Init board hardware. */
@@ -29,16 +25,16 @@ int main(void) {
   	/* Init FSL debug console. */
     BOARD_InitDebugConsole();
 
-    PRINTF("Hello World\n");
-
-    /* Force the counter to be placed into memory. */
-    volatile static int i = 0 ;
-    /* Enter an infinite loop, just incrementing a counter. */
+    uint8_t myrxdata=1;
+    uint8_t mytxdata=1;
+    uint32_t i;
     while(1) {
-        i++ ;
-        /* 'Dummy' NOP to allow source level single stepping of
-            tight while() loop */
-        __asm volatile ("nop");
+
+   //myrxdata= check_and_receive();   //here error coming please check
+   //printf(" my data=%d\n \r", myrxdata);
+    //mytxdata= check_and_transmit();
+    //for(i=0;i<10000;i++);
+      //  __asm volatile ("nop");
     }
     return 0 ;
 }
