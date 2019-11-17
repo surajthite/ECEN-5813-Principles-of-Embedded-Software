@@ -7,46 +7,41 @@
 
 #ifndef CIRCULARBUFF_H_
 #define CIRCULARBUFF_H_
-#include "stdint.h"
-#include "stdio.h"
 
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "main.h"
 typedef struct
 {
-int8_t* cbuffptr; // base of the circular buffer
-int8_t* head;	//head of the circular buffer
-int8_t* tail;	//tail of the circular buffer
-int8_t  size;	// maximum size of the circular buffer
-//int8_t length;	//Length of the circular buffer
-int8_t count;	//no of elements used in the circular buffer
+	uint8_t *cbuffptr;
+    uint8_t *newcbuffptr;
+    uint8_t *head;
+    uint8_t *tail;
+    uint16_t size;
+    uint8_t count;
 }cbuff;
 
 
 typedef enum
 {
-	SUCCESS,
-	FAIL,
-	allocated_free,
-	pointer_invalid,
-	buffer_not_initialized,
-	added,
-	removed,
-	buffer_full,
-	buffer_not_full,
-	buffer_empty,
-	buffer_not_empty,
-	wrap_Add,
-	wrap_Remove,
-	over_fill,
-	over_empty,
+    cbuff_init_success,
+    cbuff_init_fail,
+    cbuff_empty,
+    cbuff_not_empty,
+    cbuff_full,
+    cbuff_not_full,
+    null_ptr,
+    buffer_NA,
+    cbuff_success
 }cbuff_status;
 
-int8_t cbuff_init(cbuff* ptr,int8_t length);
-uint8_t cbuff_add(cbuff* ptr,uint8_t data);
-uint8_t cbuff_remove(cbuff* ptr,uint8_t store);
-uint8_t cbuff_is_full(cbuff* ptr);
-uint8_t cbuff_is_empty(cbuff* ptr);
-uint8_t cbuff_destroy(cbuff* ptr);
-
+cbuff_status cbuff_init(cbuff *ptr, uint16_t length);
+cbuff_status cbuff_add(cbuff *ptr, uint8_t val);
+cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val);
+cbuff_status cbuff_isempty(cbuff *ptr);
+cbuff_status cbuff_check_full(cbuff *ptr);
+cbuff_status cbuff_resize(cbuff *ptr,uint8_t length);
 void cbuff_print(cbuff* ptr);
 
 #endif /* CIRCULARBUFF_H_ */

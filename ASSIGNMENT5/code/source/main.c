@@ -40,6 +40,17 @@
 #include "MKL25Z4.h"
 #include "fsl_debug_console.h"
 #include "circularbuff.h"
+#include "uart_interrrupt.h"
+
+uint8_t no_of_blocks=0;
+cbuff *rx;
+uint8_t *element_deleted;
+uint8_t* info;
+int tx_flag=1;
+int count=0;
+int fibo_flag;
+char recv;
+
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
@@ -55,29 +66,48 @@ int main(void) {
 	BOARD_InitBootPeripherals();
 	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
-
-	cbuff* a ;
-	a= malloc(sizeof(cbuff));
-	a->cbuffptr = malloc(sizeof(int8_t) * 10);
-	cbuff_init(a,10);
-
-	for (int i=0;i<5;i++)
+	//PRINTF("Hello");
+	//	cbuff* a ;
+	//	a= malloc(sizeof(cbuff));
+	//	a->cbuffptr = malloc(sizeof(int8_t) * 10);
+	//	cbuff_init(a,10);
+	//
+	//	for (int i=0;i<8;i++)
+	//	{
+	//		cbuff_add(a,i);
+	//	}
+	//	printf("\n \r \n \n\n");
+	//	cbuff_print(a);
+	//	printf("\n \r \n \n\n");
+	//	uint8_t sar =0;
+	//	cbuff_delete(a,&sar);
+	//	cbuff_print(a);
+	//	printf("\n \r \n \n\n");
+	//	cbuff_add(a,5);
+	//	cbuff_print(a);
+	//	printf("\n \r \n \n\n");
+	//	cbuff_delete(a,&sar);
+	//	cbuff_print(a);
+	//	printf("\n \r \n \n\n");
+	//	cbuff_resize(a,20);
+	//	printf("\n \r \n \n\n");
+	//	for (int i=0;i<8;i++)
+	//		{
+	//			cbuff_add(a,i);
+	//		}
+	//	cbuff_print(a);
+	//cbuff* a ;
+	rx= malloc(sizeof(cbuff));
+	rx->cbuffptr = malloc(sizeof(int8_t) * 10);
+	cbuff_init(rx,10);
+	//UART_configure();
+	Init_UART0(BAUDRATE*2);
+	UART0_print_string("\n \r Suraj");
+	//char c;
+	while (1)
 	{
-		cbuff_add(a,i);
+		//c= uart_rx();
+		//printf("%c",c);
 	}
-	cbuff_print(a);
-	printf("\n \r \n \n\n");
-	cbuff_status s;
-	int8_t sar =0;
-	s=cbuff_remove(a,sar);
-	cbuff_print(a);
-	printf("\n \r \n \n\n");
-	cbuff_add(a,5);
-	cbuff_print(a);
-	printf("\n \r \n \n\n");
-	s=cbuff_remove(a,sar);
-	cbuff_print(a);
-
-
 	return 0 ;
 }

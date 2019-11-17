@@ -9,5 +9,5 @@
 #define MAIN_H_
 
 #include "circularbuff.h"
-
+#define BAUDRATE 9600
 #endif /* MAIN_H_ */
