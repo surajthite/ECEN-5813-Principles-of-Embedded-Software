@@ -2,6 +2,13 @@
 #include "circularbuff.h"
 #include "fsl_debug_console.h"
 
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
+ * Description :This Function Initializes the circular buffer
+ * @input: pointer to circular buffer and length of the circular buffer
+ * @Return : error status messages
+ *******************************************************************************************************/
+
 cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 {
 
@@ -31,7 +38,12 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
     }
 }
 
-
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_check_full(cbuff *ptr)
+ * Description :This Function checks whether circular buffer is full or not
+ * @input: pointer to circular buffer
+ * @Return : error status messages
+ *******************************************************************************************************/
 
 cbuff_status cbuff_check_full(cbuff *ptr)
 {
@@ -53,7 +65,12 @@ cbuff_status cbuff_check_full(cbuff *ptr)
     }
 }
 
-
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_isempty(cbuff *ptr)
+ * Description :This Function checks whether circular buffer is empty or not
+ * @input: pointer to circular buffer
+ * @Return : error status messages
+ *******************************************************************************************************/
 cbuff_status cbuff_isempty(cbuff *ptr)
 {
 	if(ptr==NULL)
@@ -70,7 +87,12 @@ cbuff_status cbuff_isempty(cbuff *ptr)
     }
 }
 
-
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
+ * Description :This Function adds the value to the address pointed by the head of the circular buffer
+ * @input: pointer to circular buffer and value to be added
+ * @Return : error status messages
+ *******************************************************************************************************/
 
 cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 {
@@ -105,7 +127,12 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
     }
 }
 
-
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
+ * Description :This Function deletes  the value to the address pointed by the tail of the circular buffer
+ * @input: pointer to circular buffer and pointer to a location where the removed value to be stored
+ * @Return : error status messages
+ *******************************************************************************************************/
 cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 {
 	if(ptr==NULL)
@@ -136,7 +163,50 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
     }
 
 }
+/*******************************************************************************************************
+ * Function Name:cbuff_status verify_init(cbuff* ptr)
+ * Description :This Function verifies whether a circular buffer is initialized or not by checking the pointer
+ * @input: pointer to circular buffer.
+ * @Return : error status messages
+ *******************************************************************************************************/
+cbuff_status verify_init(cbuff* ptr)
+{
+	if(ptr->cbuffptr==NULL)
+		{
+			return buffer_init_failed;
+		}
+		else
+		{
+			return buffer_init_success;
+		}
+}
 
+/*******************************************************************************************************
+ * Function Name:cbuff_status verify_ptr(cbuff *ptr)
+ * Description :This Function verifies whether a pointer is within the range of circular buffer
+ * @input: pointer to circular buffer.
+ * @Return : error status messages
+ *******************************************************************************************************/
+
+cbuff_status verify_ptr(cbuff *ptr)
+{
+	if(ptr >= ptr->cbuffptr && ptr <= ptr->head )
+	{
+		return ptr_valid;
+	}
+	else
+	{
+		return ptr_invalid;
+	}
+
+}
+
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
+ * Description :This Function resizes the circular buffer to the size of length passed as parameter implementing realloc function
+ * @input: pointer to circular buffer and new length.
+ * @Return : error status messages
+ *******************************************************************************************************/
 
 cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 {
@@ -158,6 +228,13 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
     }
 }
 
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
+ * Description :This Function prints the elements in the circular buffer along with its location
+ * @input: pointer to circular buffer.
+ * @Return : void
+ *******************************************************************************************************/
+
 void cbuff_print(cbuff* ptr)
 {
 	uint8_t *temp = ptr->tail;
@@ -167,3 +244,6 @@ void cbuff_print(cbuff* ptr)
 		temp++;
 	}
 }
+
+
+
