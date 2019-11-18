@@ -123,11 +123,15 @@ int main(void) {
 	#if APPLICATION
 
 		 char a = uart_rx();
+		 if(a == '.')
+		 {
+			 break;
+		 }
 		 application_poll(&a);
 	#endif
 
 	}
-
+generate_report();
 	return 0 ;
 }
 
@@ -159,6 +163,6 @@ void application_poll(uint8_t *ch)
 			{
 				rx_flag_1=0;
 				character_count(ch);
-				printf("%d",char_count[51]);
+				//printf("%d",char_count[51]);
 			}
 }

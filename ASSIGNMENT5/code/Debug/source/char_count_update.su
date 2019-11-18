@@ -1,1 +1,2 @@
 char_count_update.c:13:10:character_count	16	static
+char_count_update.c:19:6:generate_report	16	static

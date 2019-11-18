@@ -15,3 +15,22 @@ uint8_t* character_count(uint8_t *char_val)
 	char_count[*char_val] ++;
 	return char_count;
 }
+
+void generate_report()
+{
+	for (int i=65;i<=90;i++)
+	{
+		if(char_count[i]!=0)
+		{
+			printf("%c-%d,",i,char_count[i]);
+		}
+	}
+
+	for (int i=97;i<=122;i++)
+		{
+			if(char_count[i]!=0)
+			{
+				printf("%c-%d,",i,char_count[i]);
+			}
+		}
+}

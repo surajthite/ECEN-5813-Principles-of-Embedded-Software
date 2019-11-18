@@ -1,4 +1,4 @@
 main.c:65:5:main	24	static
-main.c:134:6:echo_function_interrupt	2072	static
-main.c:147:6:echo_function_poll	16	static
-main.c:156:6:application_poll	16	static
+main.c:138:6:echo_function_interrupt	2072	static
+main.c:151:6:echo_function_poll	16	static
+main.c:160:6:application_poll	16	static
