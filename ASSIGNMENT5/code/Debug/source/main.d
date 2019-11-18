@@ -7,7 +7,8 @@ source/main.o source/main.d: ../source/main.c ../board/board.h \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../source/circularbuff.h \
- ../source/main.h ../source/uart_interrrupt.h
+ ../source/main.h ../source/char_count_update.h \
+ ../source/uart_interrrupt.h ../source/time_stamp.h ../source/logger.h
 
 ../board/board.h:
 
@@ -51,4 +52,10 @@ source/main.o source/main.d: ../source/main.c ../board/board.h \
 
 ../source/main.h:
 
+../source/char_count_update.h:
+
 ../source/uart_interrrupt.h:
+
+../source/time_stamp.h:
+
+../source/logger.h:

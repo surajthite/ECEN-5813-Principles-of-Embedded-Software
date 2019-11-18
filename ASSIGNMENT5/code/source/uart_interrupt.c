@@ -2,14 +2,11 @@
  * uart.c
  *
  *  Created on: Nov 9, 2019
- *  Author: SURAJ THITE
+ *  Author: SURAJ THITE ,Atharv Desai
  *  Reference for Initializing Logger : https://github.com/alexander-g-dean/ESF/blob/master/Code/Chapter_8/Serial-Demo/inc/UART.h
  */
 
-#include "MKL25Z4.h"
-#include "circularbuff.h"
-#include "main.h"
-#include "fsl_debug_console.h"
+#include "uart_interrrupt.h"
 
 char ch1;
 uint8_t deleted_element;
@@ -17,14 +14,23 @@ extern cbuff *rx;
 extern uint8_t *element_deleted;
 extern uint8_t info[256];
 extern int tx_flag;
+extern bool rx_flag;
+extern bool rx_flag_1;
 int wait_flag;
 int8_t rx_data;
 
-#define USE_UART_INTERRUPTS 	(1) // 0 for polled UART communications, 1 for interrupt-driven
+#define USE_UART_INTERRUPTS 	(0) // 0 for polled UART communications, 1 for interrupt-driven
 #define UART_OVERSAMPLE_RATE 	(16)
 #define BUS_CLOCK 				(24e6)
 #define SYS_CLOCK				(48e6)
 
+
+/*******************************************************************************************************
+ * Function Name:Init_UART0(uint32_t baud_rate)
+ * Description :This function initializes the UART0 with selected baud rate as input
+ * @input: BAUD
+ * @Return : void
+ *******************************************************************************************************/
 void Init_UART0(uint32_t baud_rate)
 {
 	uint16_t sbr;
@@ -93,27 +99,48 @@ void Init_UART0(uint32_t baud_rate)
 
 }
 #if USE_UART_INTERRUPTS
-/* Non-Blocking function to receive the character over the UART0*/
+
+/*******************************************************************************************************
+ * Function Name:char uart_rx(void)
+ * Description :This Non-Blocking function to receive the character over the UART0 and return
+ * @input: void
+ * @Return : char
+ *******************************************************************************************************/
 char uart_rx(void)
 {
 	return UART0->D;
 }
 
-/* Non-Blocking function to send the character over the UART0*/
+/*******************************************************************************************************
+ * Function Name:void uart_tx(char ch)
+ * Description :Non-Blocking function to send the character over the UART0
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
 void uart_tx(char ch)
 {
 	UART0->D = ch;
 }
 #else
-/* Blocking function to receive the character over the UART0*/
+/*******************************************************************************************************
+ * Function Name:char uart_rx(void)
+ * Description :Blocking function to receive the character over the UART0
+ * @input: void
+ * @Return : char
+ *******************************************************************************************************/
 char uart_rx(void)
 {
 	recieve_wait();
-	putch_cbuff(UART0->D);
+	rx_flag_1 =1;
 	return UART0->D;
 }
 
-/* Blocking function to send the character over the UART0*/
+/*******************************************************************************************************
+ * Function Name:char uart_rx(void)
+ * Description :Blocking function to send the character over the UART0
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
 void uart_tx(char ch)
 {
   transmit_wait();
@@ -121,17 +148,37 @@ void uart_tx(char ch)
 }
 #endif
 
+/*******************************************************************************************************
+ * Function Name:void transmit_wait()
+ * Description :This function waits for Tx flag
+ * @input: void
+ * @Return : void
+ *******************************************************************************************************/
 
 
 void transmit_wait()
 {
 	while (!(UART0->S1 & UART_S1_TDRE_MASK));
 }
+
+/*******************************************************************************************************
+ * Function Name:char uart_rx(void)
+ * Description :This function waits for Tx flag
+ * @input: void
+ * @Return : void
+ *******************************************************************************************************/
+
 void recieve_wait()
 {
-	while (!(UART0->S1 &  UART_S1_RDRF_MASK));
+	while(!(UART0->S1 & UART_S1_RDRF_MASK));
 }
 
+/*******************************************************************************************************
+ * Function Name:void UART0_print_string(char *str)
+ * Description :This function Prints the string on by transmitting it through the UART terminal
+ * @input: string
+ * @Return : void
+ *******************************************************************************************************/
 
 void UART0_print_string(char *str)
 {
@@ -143,6 +190,13 @@ void UART0_print_string(char *str)
 	}
 }
 
+/*******************************************************************************************************
+ * Function Name:void UART0_print_int(uint16_t count)
+ * Description :This function prints the integer to the uart terminal
+ * @input: integer value to be transmitted
+ * @Return : void
+ *******************************************************************************************************/
+
 
 void UART0_print_int(uint16_t count)
 {
@@ -151,11 +205,26 @@ void UART0_print_int(uint16_t count)
 	UART0_print_string(str);
 }
 
+/*******************************************************************************************************
+ * Function Name:void putch_cbuff(char ch)
+ * Description :This function adds the value received to the UART terminal
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
+
 
 void putch_cbuff(char ch)
 {
 	cbuff_add(rx,ch);
 }
+
+/*******************************************************************************************************
+ * Function Name:void UART0_IRQHandler()
+ * Description :This is the interrupt handler for UART0
+ * @input: void
+ * @Return : void
+ *******************************************************************************************************/
+
 
 void UART0_IRQHandler()
 {
@@ -175,9 +244,17 @@ void UART0_IRQHandler()
 		ch1=UART0->D;
 		printf(" \n \r Rx Interrupt Handler");
 		putch_cbuff(ch1);
+		rx_flag = 1;
 	}
 	__enable_irq();
 }
+
+/*******************************************************************************************************
+ * Function Name:void cbuff_string(char *str)
+ * Description :This function adds the string to the circular buffer
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
 
 void cbuff_string(char *str)
 {
@@ -187,6 +264,12 @@ void cbuff_string(char *str)
 		str++;
 	}
 }
+/*******************************************************************************************************
+ * Function Name:void getinfo(uint8_t *element_deleted)
+ * Description :This function updates the count of elements that have been deleted
+ * @input: pointer to the deleted element
+ * @Return : void
+ *******************************************************************************************************/
 
 void getinfo(uint8_t *element_deleted)
 {

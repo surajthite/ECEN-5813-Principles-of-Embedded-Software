@@ -1,4 +1,3 @@
-logger.c:22:6:Log_integer	16	static
-logger.c:36:6:Log_String	16	static
-logger.c:145:6:Log_data	24	static
-logger.c:210:9:Log_level	8	static
+logger.c:25:6:Log_integer	16	static
+logger.c:40:6:Log_String	32	static
+logger.c:148:9:Log_level	8	static

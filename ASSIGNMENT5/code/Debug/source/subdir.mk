@@ -5,29 +5,35 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/RGBled.c \
+../source/char_count_update.c \
 ../source/circularbuff.c \
 ../source/logger.c \
 ../source/main.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
+../source/time_stamp.c \
 ../source/uart_interrupt.c 
 
 OBJS += \
 ./source/RGBled.o \
+./source/char_count_update.o \
 ./source/circularbuff.o \
 ./source/logger.o \
 ./source/main.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
+./source/time_stamp.o \
 ./source/uart_interrupt.o 
 
 C_DEPS += \
 ./source/RGBled.d \
+./source/char_count_update.d \
 ./source/circularbuff.d \
 ./source/logger.d \
 ./source/main.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
+./source/time_stamp.d \
 ./source/uart_interrupt.d 
 
 

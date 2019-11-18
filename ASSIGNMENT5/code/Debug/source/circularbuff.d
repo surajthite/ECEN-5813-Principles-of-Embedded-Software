@@ -1,5 +1,5 @@
 source/circularbuff.o source/circularbuff.d: ../source/circularbuff.c \
- ../source/circularbuff.h ../source/main.h \
+ ../source/circularbuff.h ../source/main.h ../source/char_count_update.h \
  ../utilities/fsl_debug_console.h ../drivers/fsl_common.h \
  ../CMSIS/fsl_device_registers.h ../CMSIS/MKL25Z4.h \
  ../CMSIS/core_cm0plus.h ../CMSIS/core_cmInstr.h ../CMSIS/cmsis_gcc.h \
@@ -10,6 +10,8 @@ source/circularbuff.o source/circularbuff.d: ../source/circularbuff.c \
 ../source/circularbuff.h:
 
 ../source/main.h:
+
+../source/char_count_update.h:
 
 ../utilities/fsl_debug_console.h:
 

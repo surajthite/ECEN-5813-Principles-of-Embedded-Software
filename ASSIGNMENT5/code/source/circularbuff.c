@@ -111,10 +111,11 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 	else if(ptr->head==((ptr->cbuffptr)+((ptr->size)-1)))
     {
 		*(ptr->head)= val;
-		PRINTF(" \r \n New Item Inserted at position %d location :: %d ",ptr->head,*ptr->head);
+		PRINTF(" \r \n WRAP ADD ::New Item Inserted at position %d location :: %d ",ptr->head,*ptr->head);
 		ptr->head=ptr->cbuffptr;
-		ptr->head++;
-		ptr->count++;
+		//ptr->head++;
+		//ptr->count++;
+		ptr->count =0;
 		return cbuff_success;
     }
 	else

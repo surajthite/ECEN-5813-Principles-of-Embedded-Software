@@ -41,6 +41,8 @@
 #include "fsl_debug_console.h"
 #include "circularbuff.h"
 #include "uart_interrrupt.h"
+#include "time_stamp.h"
+#include "logger.h"
 
 uint8_t no_of_blocks=0;
 cbuff *rx;
@@ -48,13 +50,15 @@ uint8_t *element_deleted;
 uint8_t* info;
 int tx_flag=1;
 int count=0;
-int fibo_flag;
 char recv;
-
+bool rx_flag;
+bool rx_flag_1;
+extern uint8_t char_count[256];
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
-
+#define ECHO 0
+#define APPLICATION 1
 /*
  * @brief   Application entry point.
  */
@@ -97,17 +101,64 @@ int main(void) {
 	//		}
 	//	cbuff_print(a);
 	//cbuff* a ;
+	Init_SysTick();
 	rx= malloc(sizeof(cbuff));
 	rx->cbuffptr = malloc(sizeof(int8_t) * 10);
 	cbuff_init(rx,10);
-	//UART_configure();
 	Init_UART0(BAUDRATE*2);
-	UART0_print_string("\n \r Suraj");
-	//char c;
+	time_stamp_print();
+
 	while (1)
 	{
-		//c= uart_rx();
-		//printf("%c",c);
+		//		time_stamp_print();
+#if ECHO
+#if USE_UART_INTERRUPTS
+		echo_function_interrupt();
+#else
+		 char a = uart_rx();
+		 echo_function_poll(a);
+#endif
+#endif
+
+	#if APPLICATION
+
+		 char a = uart_rx();
+		 application_poll(&a);
+	#endif
+
 	}
+
 	return 0 ;
+}
+
+void echo_function_interrupt()
+{
+	if(rx_flag ==1)
+	{
+		uint8_t *current = rx->head;
+		current --;
+		char time_buf[2048] = {0};
+		sprintf(time_buf, " \n %c", *current);
+		UART0_print_string(time_buf);
+		rx_flag=0;
+	}
+}
+
+void echo_function_poll(char a)
+{
+		if(rx_flag_1==1)
+		{
+			rx_flag_1=0;
+			uart_tx(a);
+		}
+}
+
+void application_poll(uint8_t *ch)
+{
+	if(rx_flag_1==1)
+			{
+				rx_flag_1=0;
+				character_count(ch);
+				printf("%d",char_count[51]);
+			}
 }

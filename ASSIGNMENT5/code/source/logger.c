@@ -3,8 +3,11 @@
 #include <stdint.h>
 #include "logger.h"
 #include "main.h"
+#include "uart_interrrupt.h"
+#include "circularbuff.h"
+#include "time_stamp.h"
 
-modes a = Test;
+modes a = Test;   // setting mode
 
 fnnames fn_name;
 
@@ -22,7 +25,8 @@ uint8_t flag;
 void Log_integer(modes current_mode,int16_t intval)
 {
 	if(current_mode != 1)      // since no integers to print in normal status mode
-	printf("%d ",intval); // Print the  data
+	//printf("%d ",intval); // Print the  data
+	UART0_print_int(intval);
 }
 
 
@@ -33,178 +37,112 @@ void Log_integer(modes current_mode,int16_t intval)
  * @Return : void
  *******************************************************************************************************/
 ////// Logger for string ///////////
-void Log_String(uint8_t current_mode,fnnames mycurrent_function, char* str)
+void Log_String(uint8_t current_mode,fnnames mycurrent_function, char *str)
 {
+	time_stamp_print();
 	if (current_mode ==0)
 	{
-	    printf("\n \r -->Test Mode: \t");
-	    //call Unittest();
+	    char *str ="\n \r -->Test Mode: \t";
+	    UART0_print_string(str);
 	}
 	 if (current_mode ==1)
 	{
-		printf("\n \r -->Debug Mode: \t");
-		/*if(mycurrent_state1==0)
-		{
-			printf("POST_STATES: \t Running Power on Startup test \n");
-		}
-		if(mycurrent_state1==1)
-	    {
-			printf("I2C_READ_TEMPERATURE:\t ENTERED <STATE I2C_READ_TEMPERATURE> \n CURRENT TEMP VALUE :");
-		}
-		if(mycurrent_state1==2)
-		{
-			printf("AVERAGE_WAIT:\t ENTERED <AVERAGE WAIT> \n \r AVERAGE TEMPERATURE VALUE FOR ITERATION: ");
-		}
-		if(mycurrent_state1==3)
-		{
-			printf("TEMP_ALERT:\t Led set to red \n ************ALERT : TEMPERTURE BELOW 0 DEGREE C ************** ");
-		}*/
-
+		char *str ="\n \r -->Debug Mode: \t";
+		UART0_print_string(str);
 	}
 	 if (current_mode ==2)
 	{
-	    printf("\n \r -->Normal Mode: \t");
-	    /*if(mycurrent_state1==3)
-	    {
-	    	printf("TEMP_ALERT:\t Led set to red \n ************ALERT : TEMPERTURE BELOW 0 DEGREE C ************** ");
-	    }*/
+		    char *str ="\n \r -->Normal Mode: \t";
+		    UART0_print_string(str);
 	}
-	if (mycurrent_function==state_machine1)
+	if (mycurrent_function==cbuffinit)
 	{
-		printf(" -->Function name: state_machine_1 \n");
+		UART0_print_string(" -->Function name: cbuffinit \n");
 	}
-	else if (mycurrent_function==i2cwrite)
+	else if (mycurrent_function==cbuffcheck_full)
 	{
-		printf(" -->Function name: i2c_write \n");
+		UART0_print_string(" -->Function name: cbuffcheck_full \n");
 	}
-	else if (mycurrent_function==i2creadtemperature)
+	else if (mycurrent_function==cbuffisempty)
 	{
-	    printf("-->Function name: i2c_read_temperature \n");
+		UART0_print_string("-->Function name: cbuffisempty \n");
 	}
-	else if (mycurrent_function==POST_TESTread_bytes)
+	else if (mycurrent_function==cbuffadd)
 	{
-		printf("Function name: POST_TEST_read_bytes \n");
+		UART0_print_string("Function name: cbuffadd \n");
 	}
-	else if (mycurrent_function==checkconnection)
+	else if (mycurrent_function==cbuffdelete)
 	{
-		printf("Function name: check connection \n");
+		UART0_print_string("Function name: cbuffdelete \n");
 	}
-	else if (mycurrent_function==SysTickHandler)
+	else if (mycurrent_function==verifyinit)
 	{
-		printf("Function name: SysTick_Handler \n");
+		UART0_print_string("Function name: verifyinit \n");
 	}
-	else if (mycurrent_function==InitSystick)
+	else if (mycurrent_function==verifyptr)
 	{
-		printf("Function name: InitSystick \n");
+		UART0_print_string("Function name: verifyptr \n");
 	}
-	else if (mycurrent_function==state_machine2)
+	else if (mycurrent_function==cbuffresize)
 	{
-		printf("Function name: state_machine2 \n");
+		UART0_print_string("Function name: cbuffresize \n");
 	}
-	else if (mycurrent_function==state_transition__intable)
+	else if (mycurrent_function==cbuffprint)
 	{
-		printf("Function name: state_transition__intable \n");
+		UART0_print_string("Function name: cbuffprint \n");
 	}
-	else if (mycurrent_function==POSTSTATE)
+	else if (mycurrent_function==InitUART0)
 	{
-		printf("Function name: POSTSTATE \n");
+		UART0_print_string("Function name: InitUART0 \n");
 	}
-	else if (mycurrent_function==I2C_READ_TEMPERATURESTATE)
+	else if (mycurrent_function==Uartrx)
 	{
-		printf("Function name: I2C_READ_TEMPERATURESTATE \n");
+		UART0_print_string("Function name: Uartrx \n");
 	}
-	else if (mycurrent_function==	AVERAGE_WAITSTATE)
+	else if (mycurrent_function==Uarttx)
 	{
-		printf("Function name: 	AVERAGE_WAITSTATE \n");
+		UART0_print_string("Function name: 	Uarttx \n");
 	}
-	else if (mycurrent_function==	TMEP_ALERTSTATE)
+	else if (mycurrent_function==Transmitwait)
 	{
-		printf("Function name: 	TMEP_ALERTSTATE \n");
+		UART0_print_string("Function name: 	Transmitwait \n");
 	}
-	else if (mycurrent_function==	DISCONNECTEDSTATE)
+	else if (mycurrent_function==Recievewait)
 	{
-		printf("Function name: 	DISCONNECTEDSTATE \n");
+		UART0_print_string("Function name: Recievewait \n");
+	}
+	else if (mycurrent_function==UART0printstring)
+	{
+		UART0_print_string("Function name: UART0printstring \n");
+	}
+	else if (mycurrent_function==UART0print_int)
+	{
+		UART0_print_string("Function name: UART0print_int \n");
+	}
+	else if (mycurrent_function==putchcbuff)
+	{
+		UART0_print_string("Function name: putchcbuff \n");
+	}
+	else if (mycurrent_function==UART0IRQHandler)
+	{
+		UART0_print_string("Function name: UART0IRQHandler \n");
+	}
+	else if (mycurrent_function==cbuffstring)
+	{
+		UART0_print_string("Function name: cbuffstring \n");
+	}
+	else if (mycurrent_function==Getinfo)
+	{
+		UART0_print_string("Function name: Getinfo \n");
 	}
 	else
 	{
-		printf("Function name: 	ENDSTATE \n");
+		UART0_print_string("Function name: 	charactercount \n");
 	}
 
 	   printf("\n \r %s ",str);
 
 }
-
-
-/*******************************************************************************************************
- * Function Name: Log_data(uint32_t * loc,uint32_t length)
- * Description : This function  is used to log the address and variable value stored at it.
- * @input:  pointer to the memory location and the length
- * @Return : void
- *******************************************************************************************************/
-////// Logger for data ///////////
-void Log_data(uint32_t * loc,uint32_t length)
-{
-	if(flag==1) {
-		int i=0;
-		printf("\n\rThe Address is %p  ",loc);   //Print the address of the memory block pointed by the pointer
-		if (length !=0)
-		{
-			printf(" and data is");
-		}
-		for(i=0;i<length;i++)
-		{
-			printf(" %x",*(loc+i));	//Print the data stored at the memory location
-		}
-
-	}
-}
-
-
-////// Logger test, debug and normal ///////////
-
-/*******************************************************************************************************
- * Function Name:void Log_test()
- * Description : This function .enables the logging for the system
- * @input:  void
- * @Return : void
- *******************************************************************************************************/
-/*
-////// Logger set flag for test mode  ///////////
-void Log_test()
-{
-	flag =0;
-}
-
-******************************************************************************************************
- * Function Name: Log_debug()
- * Description : This function .disables the logging for the system
- * @input:  void
- * @Return : void
- ******************************************************************************************************
-////// Logger set flag for debug mode ///////////
-void Log_debug()
-{
-	flag =1;
-}
-
-////// Logger set flag for normal mode ///////////
-void Log_normal()
-{
-	flag =2;
-}
-*/
-
-/*******************************************************************************************************
- * Function Name:uint8_t Log_status()
- * Description : This function  enables whether log is enabled or disabled for the system
- * @input:  void
- * @Return : flag of uint8_t
- *******************************************************************************************************/
-/*////// Logger for data ///////////
-uint8_t Log_status()
-{
-	return flag;
-}*/
 
 ///////////////Log level///////////////////////////
 uint8_t Log_level()
