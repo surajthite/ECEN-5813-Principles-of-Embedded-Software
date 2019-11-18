@@ -13,6 +13,13 @@
 #include "circularbuff.h"
 #include "fsl_debug_console.h"
 //void UART_configure(void);
+
+
+#define USE_UART_INTERRUPTS 	(0) // 0 for polled UART communications, 1 for interrupt-driven
+#define UART_OVERSAMPLE_RATE 	(16)
+#define BUS_CLOCK 				(24e6)
+#define SYS_CLOCK				(48e6)
+
 void tx_poll();
 void custom_printf(char *);
 void Init_UART0(uint32_t baud_rate);

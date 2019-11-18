@@ -19,10 +19,7 @@ extern bool rx_flag_1;
 int wait_flag;
 int8_t rx_data;
 
-#define USE_UART_INTERRUPTS 	(0) // 0 for polled UART communications, 1 for interrupt-driven
-#define UART_OVERSAMPLE_RATE 	(16)
-#define BUS_CLOCK 				(24e6)
-#define SYS_CLOCK				(48e6)
+
 
 
 /*******************************************************************************************************

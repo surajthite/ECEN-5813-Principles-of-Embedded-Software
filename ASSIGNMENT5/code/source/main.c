@@ -54,11 +54,13 @@ char recv;
 bool rx_flag;
 bool rx_flag_1;
 extern uint8_t char_count[256];
+bool int_exit;
 /* TODO: insert other include files here. */
 
 /* TODO: insert other definitions and declarations here. */
 #define ECHO 0
 #define APPLICATION 1
+//#define USE_UART_INTERRUPTS 1
 /*
  * @brief   Application entry point.
  */
@@ -108,31 +110,48 @@ int main(void) {
 	Init_UART0(BAUDRATE*2);
 	time_stamp_print();
 
-	while (1)
-	{
-		//		time_stamp_print();
+
 #if ECHO
 #if USE_UART_INTERRUPTS
+	while (1)
+	{
 		echo_function_interrupt();
-#else
-		 char a = uart_rx();
-		 echo_function_poll(a);
-#endif
-#endif
-
-	#if APPLICATION
-
-		 char a = uart_rx();
-		 if(a == '.')
-		 {
-			 break;
-		 }
-		 application_poll(&a);
-	#endif
-
 	}
-generate_report();
+
+#else
+	while (1)
+	{
+		char a = uart_rx();
+		echo_function_poll(a);
+	}
+
+#endif
+#endif
+
+#if APPLICATION
+#if USE_UART_INTERRUPTS
+		while (int_exit ==0)
+		{
+			application_int();
+		}
+
+#else
+		while(1)
+		{
+			char a = uart_rx();
+			if(a == '.')
+			{
+				break;
+			}
+			application_poll(&a);
+		}
+
+#endif
+#endif
+
+	generate_report();
 	return 0 ;
+
 }
 
 void echo_function_interrupt()
@@ -150,19 +169,36 @@ void echo_function_interrupt()
 
 void echo_function_poll(char a)
 {
-		if(rx_flag_1==1)
-		{
-			rx_flag_1=0;
-			uart_tx(a);
-		}
+	if(rx_flag_1==1)
+	{
+		rx_flag_1=0;
+		uart_tx(a);
+	}
 }
 
 void application_poll(uint8_t *ch)
 {
 	if(rx_flag_1==1)
-			{
-				rx_flag_1=0;
-				character_count(ch);
-				//printf("%d",char_count[51]);
-			}
+	{
+		rx_flag_1=0;
+		character_count(ch);
+		//printf("%d",char_count[51]);
+	}
+}
+
+
+void application_int()
+{
+	if(rx_flag ==1)
+	{
+		uint8_t *current = rx->head;
+		current --;
+		if(*current == '.')
+		{
+			int_exit =1;
+		}
+		character_count(current);
+		//UART0_print_string(time_buf);
+		rx_flag=0;
+	}
 }

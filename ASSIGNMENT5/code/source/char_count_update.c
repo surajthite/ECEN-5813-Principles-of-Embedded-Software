@@ -18,6 +18,7 @@ uint8_t* character_count(uint8_t *char_val)
 
 void generate_report()
 {
+	printf("\n \r");
 	for (int i=65;i<=90;i++)
 	{
 		if(char_count[i]!=0)
