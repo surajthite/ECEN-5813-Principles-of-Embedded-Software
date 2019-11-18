@@ -169,6 +169,7 @@ void transmit_wait()
 
 void recieve_wait()
 {
+	Log_String(2,Recievewait,"Waiting for Character to receive");
 	while(!(UART0->S1 & UART_S1_RDRF_MASK));
 }
 
@@ -217,7 +218,7 @@ void putch_cbuff(char ch)
 	cbuff_status overflow = cbuff_add(rx,ch);
 	if (overflow == cbuff_full)
 	{
-		Log_String(0,putchcbuff,"Buffer_Full");
+		Log_String(2,putchcbuff,"Buffer_Full"); //T
 	}
 }
 
@@ -245,7 +246,7 @@ void UART0_IRQHandler()
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
 		ch1=UART0->D;
-		printf(" \n \r Rx Interrupt Handler \n \r");
+		Log_String(2,UART0IRQHandler,"RX Interrupt Detected");
 		putch_cbuff(ch1);
 		rx_flag = 1;
 	}
@@ -261,8 +262,10 @@ void UART0_IRQHandler()
 
 void cbuff_string(char *str)
 {
+
 	while(*str != '\0')
 	{
+		Log_String(2,cbuffstring,"Adding String to Circular Buffer");
 		putch_cbuff(*str);
 		str++;
 	}

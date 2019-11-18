@@ -38,9 +38,9 @@
 
 
 //Program Execution Control Variables
-#define ECHO 0
-#define APPLICATION 1
-
+#define ECHO 1
+#define APPLICATION 0
+#define TESTMODE 0
 // Program Definations
 
 #define buff_length (10)
@@ -109,9 +109,14 @@ int main(void) {
 
 	rx->cbuffptr = malloc(sizeof(int8_t) * buff_length);	//store the starting address of the Length in the base pointer of the structure
 
-	cbuff_init(rx,buff_length);
+	cbuff_status s = cbuff_init(rx,buff_length);
 
 	Init_UART0(BAUDRATE*2);
+
+#if TESTMODE
+
+
+#else
 
 #if ECHO
 #if USE_UART_INTERRUPTS
@@ -134,19 +139,20 @@ int main(void) {
 
 #if APPLICATION
 #if USE_UART_INTERRUPTS
-	Log_String(2,Main,"**** APPLICATION USING INTERRUPTS****");
+	Log_String(2,Main,"**** APPLICATION USING INTERRUPTS****");	//1
 		while (int_exit ==0)
 		{
 			application_int();
 		}
 
 #else
-		Log_String(2,Main,"**** APPLICATION USING POLLING****");
+		Log_String(2,Main,"**** APPLICATION USING POLLING****"); //1
 		while(1)
 		{
 			char a = uart_rx();
 			if(a == '.')
 			{
+				Log_String(2,Main,"****Application Mode  Terminated****"); //1
 				break;
 			}
 			application_poll(&a);
@@ -155,9 +161,10 @@ int main(void) {
 #endif
 #endif
 
+	Log_String(2,Main,"****Generating Report*****");	//1
 	generate_report();
 	return 0 ;
-
+#endif
 }
 
 /*******************************************************************************************************
@@ -170,11 +177,13 @@ void echo_function_interrupt()
 {
 	if(rx_flag ==1)
 	{
+		Log_String(2,Echo_function_interrupt,"Character Received");	//1
 		uint8_t *current = rx->head;
 		current --;
 		char time_buf[2048] = {0};
 		sprintf(time_buf, " \n %c", *current);
 		UART0_print_string(time_buf);
+		Log_String(2,Echo_function_interrupt,"Character Transmitted");//1
 		rx_flag=0;
 	}
 }
@@ -189,8 +198,10 @@ void echo_function_poll(char a)
 {
 	if(rx_flag_1==1)
 	{
+		Log_String(2,Echo_function_poll,"Character Received");//1
 		rx_flag_1=0;
 		uart_tx(a);
+		Log_String(2,Echo_function_poll,"Character Transmitted");//1
 	}
 }
 /*******************************************************************************************************
@@ -203,8 +214,9 @@ void application_poll(uint8_t *ch)
 {
 	if(rx_flag_1==1)
 	{
-		Log_String(1,Application_poll,"Character Received");
+		Log_String(2,Application_poll,"Character Received"); //1
 		rx_flag_1=0;
+		Log_String(2,charactercount,"Character Count Incremented");	//1
 		character_count(ch);
 		//printf("%d",char_count[51]);
 	}
@@ -220,14 +232,18 @@ void application_int()
 {
 	if(rx_flag ==1)
 	{
+		Log_String(2,Application_int,"Character Received");//1
 		uint8_t *current = rx->head;
 		current --;
 		if(*current == '.')
 		{
 			int_exit =1;
+			Log_String(2,Application_int,"****Application Mode  Terminated****"); //1
+
 		}
+
+		Log_String(2,charactercount,"Character Count Incremented"); //1
 		character_count(current);
-		//UART0_print_string(time_buf);
 		rx_flag=0;
 	}
 }

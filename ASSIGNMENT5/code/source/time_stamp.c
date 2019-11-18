@@ -89,7 +89,7 @@ void time_stamp_print()
 	uint64_t hrs = (uint64_t)(current/3600)%60;
 
 
-	sprintf(time_buf, "%02d:",  hrs);
+	sprintf(time_buf, "\n%02d:",  hrs);
 	UART0_print_string(time_buf);
 	sprintf(time_buf, "%02d:",  min);
 	UART0_print_string(time_buf);

@@ -111,7 +111,8 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 	else if(ptr->head==((ptr->cbuffptr)+((ptr->size)-1)))
     {
 		*(ptr->head)= val;
-		PRINTF(" \r \n WRAP ADD ::New Item Inserted at position %d location :: %d ",ptr->head,*ptr->head);
+
+		PRINTF("  WRAP ADD ::New Item Inserted at position %d location :: %d \r \n",ptr->head,*ptr->head);
 		ptr->head=ptr->cbuffptr;
 		//ptr->head++;
 		ptr->count++;
@@ -121,7 +122,7 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 	else
     {
 		*(ptr->head)=val;
-		PRINTF(" \r \n New Item Inserted at position %d location :: %d ",ptr->head,*ptr->head);
+		PRINTF("New Item Inserted at position %d location :: %d  \r \n",ptr->head,*ptr->head);
 		ptr->head++;
 		ptr->count++;
 		return cbuff_success;
@@ -153,6 +154,7 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 		*(val)=*(ptr->tail);
 		ptr->tail=ptr->cbuffptr;
 		ptr->count--;
+		Log_String(2,cbuffdelete,"Wrap- Deleted");	//T
 		return wrap_remove;
     }
 	else
@@ -160,6 +162,7 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 		*(val)=*(ptr->tail);
 		ptr->tail++;
 		ptr->count--;
+		Log_String(2,cbuffdelete,"Deleted");	//T
 		return cbuff_success;
     }
 
@@ -221,7 +224,7 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
     }
 	else
     {
-		PRINTF(" \r \n Buffer Size Reallocated");
+		Log_String(2,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
 		ptr->newcbuffptr=(uint8_t *)realloc(ptr->cbuffptr,sizeof(uint8_t)*length);
 		ptr->cbuffptr=ptr->newcbuffptr;
 		ptr->size=length;
