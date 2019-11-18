@@ -7,6 +7,7 @@
  */
 
 #include "uart_interrrupt.h"
+#include "logger.h"
 
 char ch1;
 uint8_t deleted_element;
@@ -16,6 +17,7 @@ extern uint8_t info[256];
 extern int tx_flag;
 extern bool rx_flag;
 extern bool rx_flag_1;
+extern modes a;
 int wait_flag;
 int8_t rx_data;
 
@@ -212,7 +214,11 @@ void UART0_print_int(uint16_t count)
 
 void putch_cbuff(char ch)
 {
-	cbuff_add(rx,ch);
+	cbuff_status overflow = cbuff_add(rx,ch);
+	if (overflow == cbuff_full)
+	{
+		Log_String(0,putchcbuff,"Buffer_Full");
+	}
 }
 
 /*******************************************************************************************************
@@ -239,7 +245,7 @@ void UART0_IRQHandler()
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
 		ch1=UART0->D;
-		printf(" \n \r Rx Interrupt Handler");
+		printf(" \n \r Rx Interrupt Handler \n \r");
 		putch_cbuff(ch1);
 		rx_flag = 1;
 	}

@@ -34,7 +34,13 @@ typedef enum
 	UART0IRQHandler,
 	cbuffstring,
 	Getinfo,
-	charactercount
+	charactercount,
+	Application_poll,
+	Application_int,
+	Echo_function_poll,
+	Echo_function_interrupt,
+	Generate_report,
+	Main
 
 }fnnames;
 

@@ -28,6 +28,8 @@ typedef enum
     cbuff_init_success,
     cbuff_init_fail,
     cbuff_empty,
+	wrap_add,
+	wrap_remove,
     cbuff_not_empty,
     cbuff_full,
     cbuff_not_full,

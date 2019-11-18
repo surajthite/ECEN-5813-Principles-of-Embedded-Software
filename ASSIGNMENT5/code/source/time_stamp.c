@@ -93,8 +93,8 @@ void time_stamp_print()
 	UART0_print_string(time_buf);
 	sprintf(time_buf, "%02d:",  min);
 	UART0_print_string(time_buf);
-	sprintf(time_buf, "%02d",  sec);
+	sprintf(time_buf, "%02d:",  sec);
 	UART0_print_string(time_buf);
-	sprintf(time_buf, ".%1d \n \r ",  tenths_count%10);
+	sprintf(time_buf, ".%1d",  tenths_count%10);
 	UART0_print_string(time_buf);
 }

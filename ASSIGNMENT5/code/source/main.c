@@ -32,17 +32,21 @@
  * @file    PES_ASSIGNMENT5.c
  * @brief   Application entry point.
  */
-#include <stdio.h>
-#include "board.h"
-#include "peripherals.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "MKL25Z4.h"
-#include "fsl_debug_console.h"
-#include "circularbuff.h"
-#include "uart_interrrupt.h"
-#include "time_stamp.h"
-#include "logger.h"
+/* TODO: insert other include files here. */
+#include "main.h"
+
+
+
+//Program Execution Control Variables
+#define ECHO 0
+#define APPLICATION 1
+
+// Program Definations
+
+#define buff_length (10)
+#define BAUDRATE (9600)
+
+/* TODO: insert other Global declarations here. */
 
 uint8_t no_of_blocks=0;
 cbuff *rx;
@@ -55,12 +59,8 @@ bool rx_flag;
 bool rx_flag_1;
 extern uint8_t char_count[256];
 bool int_exit;
-/* TODO: insert other include files here. */
 
-/* TODO: insert other definitions and declarations here. */
-#define ECHO 0
-#define APPLICATION 1
-//#define USE_UART_INTERRUPTS 1
+
 /*
  * @brief   Application entry point.
  */
@@ -72,7 +72,6 @@ int main(void) {
 	BOARD_InitBootPeripherals();
 	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
-	//PRINTF("Hello");
 	//	cbuff* a ;
 	//	a= malloc(sizeof(cbuff));
 	//	a->cbuffptr = malloc(sizeof(int8_t) * 10);
@@ -103,22 +102,27 @@ int main(void) {
 	//		}
 	//	cbuff_print(a);
 	//cbuff* a ;
-	Init_SysTick();
-	rx= malloc(sizeof(cbuff));
-	rx->cbuffptr = malloc(sizeof(int8_t) * 10);
-	cbuff_init(rx,10);
-	Init_UART0(BAUDRATE*2);
-	time_stamp_print();
 
+	Init_SysTick();		//Initialize the Systick Timer
+
+	rx= malloc(sizeof(cbuff));	//Initialize the Rx circular buffer with size of structure
+
+	rx->cbuffptr = malloc(sizeof(int8_t) * buff_length);	//store the starting address of the Length in the base pointer of the structure
+
+	cbuff_init(rx,buff_length);
+
+	Init_UART0(BAUDRATE*2);
 
 #if ECHO
 #if USE_UART_INTERRUPTS
+	Log_String(2,Main,"**** ECHO USING INTERRUPTS****");
 	while (1)
 	{
 		echo_function_interrupt();
 	}
 
 #else
+	Log_String(2,Main,"**** ECHO USING POLLING****");
 	while (1)
 	{
 		char a = uart_rx();
@@ -130,12 +134,14 @@ int main(void) {
 
 #if APPLICATION
 #if USE_UART_INTERRUPTS
+	Log_String(2,Main,"**** APPLICATION USING INTERRUPTS****");
 		while (int_exit ==0)
 		{
 			application_int();
 		}
 
 #else
+		Log_String(2,Main,"**** APPLICATION USING POLLING****");
 		while(1)
 		{
 			char a = uart_rx();
@@ -154,6 +160,12 @@ int main(void) {
 
 }
 
+/*******************************************************************************************************
+ * Function Name:void echo_function_interrupt()
+ * Description :This function echoes the characters recieved from the sender via non-blocking mode of operation
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
 void echo_function_interrupt()
 {
 	if(rx_flag ==1)
@@ -167,6 +179,12 @@ void echo_function_interrupt()
 	}
 }
 
+/*******************************************************************************************************
+ * Function Name:void echo_function_poll(char a)
+ * Description :This function echoes the characters recieved from the sender via blocking mode of operation
+ * @input: char
+ * @Return : void
+ *******************************************************************************************************/
 void echo_function_poll(char a)
 {
 	if(rx_flag_1==1)
@@ -175,18 +193,29 @@ void echo_function_poll(char a)
 		uart_tx(a);
 	}
 }
-
+/*******************************************************************************************************
+ * Function Name:void application_poll(uint8_t *ch)
+ * Description :This function runs the application mode of operation in polling mode
+ * @input: pointer to a char value.
+ * @Return : void
+ *******************************************************************************************************/
 void application_poll(uint8_t *ch)
 {
 	if(rx_flag_1==1)
 	{
+		Log_String(1,Application_poll,"Character Received");
 		rx_flag_1=0;
 		character_count(ch);
 		//printf("%d",char_count[51]);
 	}
 }
 
-
+/*******************************************************************************************************
+ * Function Name:void application_int()
+ * Description :This function runs the application mode of operation in interrupt mode
+ * @input: void
+ * @Return : void
+ *******************************************************************************************************/
 void application_int()
 {
 	if(rx_flag ==1)

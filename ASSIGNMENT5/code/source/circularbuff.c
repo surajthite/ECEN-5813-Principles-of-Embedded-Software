@@ -114,9 +114,9 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 		PRINTF(" \r \n WRAP ADD ::New Item Inserted at position %d location :: %d ",ptr->head,*ptr->head);
 		ptr->head=ptr->cbuffptr;
 		//ptr->head++;
-		//ptr->count++;
-		ptr->count =0;
-		return cbuff_success;
+		ptr->count++;
+		//ptr->count =0;
+		return wrap_add;
     }
 	else
     {
@@ -153,7 +153,7 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 		*(val)=*(ptr->tail);
 		ptr->tail=ptr->cbuffptr;
 		ptr->count--;
-		return cbuff_success;
+		return wrap_remove;
     }
 	else
     {
