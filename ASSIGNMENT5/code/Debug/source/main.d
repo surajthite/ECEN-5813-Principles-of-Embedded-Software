@@ -9,7 +9,7 @@ source/main.o source/main.d: ../source/main.c ../source/main.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../source/uart_interrrupt.h \
  ../source/time_stamp.h ../source/logger.h ../source/unitTest.h \
- ../source/System.h ../source/uCUnit-v1.0.h
+ ../source/System.h ../source/uCUnit-v1.0.h ../source/RGBled.h
 
 ../source/main.h:
 
@@ -66,3 +66,5 @@ source/main.o source/main.d: ../source/main.c ../source/main.h \
 ../source/System.h:
 
 ../source/uCUnit-v1.0.h:
+
+../source/RGBled.h:

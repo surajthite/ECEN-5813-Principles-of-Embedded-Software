@@ -35,11 +35,12 @@
 /* TODO: insert other include files here. */
 #include "main.h"
 #include "unitTest.h"
+#include "RGBled.h"
 
 
 //Program Execution Control Variables
-#define ECHO 1
-#define APPLICATION 0
+#define ECHO 0
+#define APPLICATION 1
 #define TESTMODE 0
 
 // Program Definitions
@@ -75,6 +76,10 @@ int main(void) {
 	BOARD_InitDebugConsole();
 
 	Init_SysTick();		//Initialize the Systick Timer
+
+	RGB_init();	//Initialize the LEDs
+
+	led_switch(0);	//Initialize the LED to Blue
 
 	rx= malloc(sizeof(cbuff));	//Initialize the Rx circular buffer with size of structure
 

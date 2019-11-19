@@ -15,12 +15,14 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 
 	if(ptr==NULL || length <=0)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else
 	{
 		if((ptr->cbuffptr)==NULL)
 		{
+			led_switch(1);
 			ptr->head=NULL;
 			ptr->tail=NULL;
 			ptr->count=0;
@@ -50,6 +52,7 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 {
 	if(ptr==NULL)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -58,6 +61,7 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 	}
 	else if ((ptr->count)==(ptr->size))
 	{
+		led_switch(1);
 		return cbuff_full;
 	}
 	else
@@ -76,6 +80,7 @@ cbuff_status cbuff_isempty(cbuff *ptr)
 {
 	if(ptr==NULL)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -84,6 +89,7 @@ cbuff_status cbuff_isempty(cbuff *ptr)
 	}
 	else if ((ptr->count)==0)
 	{
+		led_switch(1);
 		return cbuff_empty;
 	}
 }
@@ -99,6 +105,7 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 {
 	if(ptr==NULL)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -107,6 +114,7 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 	}
 	else if (cbuff_check_full(ptr)==cbuff_full)
 	{
+		led_switch(1);
 		return cbuff_full;
 	}
 	else if(ptr->head==((ptr->cbuffptr)+((ptr->size)-1)))
@@ -140,14 +148,17 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 {
 	if(ptr==NULL)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else if ((ptr->cbuffptr)==NULL)
 	{
+		led_switch(1);
 		return buffer_NA;
 	}
 	else if (cbuff_isempty(ptr)==cbuff_empty)
 	{
+		led_switch(1);
 		return cbuff_empty;
 	}
 	else if(ptr->tail==((ptr->cbuffptr)+((ptr->size)-1)))
@@ -182,6 +193,7 @@ cbuff_status verify_init(cbuff* ptr)
 {
 	if(ptr->cbuffptr==NULL)
 	{
+		led_switch(1);
 		return buffer_init_failed;
 	}
 	else
@@ -201,10 +213,12 @@ cbuff_status verify_ptr(uint8_t *ptr1,cbuff *ptr)
 {
 	if(ptr1 >= ptr->cbuffptr && ptr1 <= ptr->head )
 	{
+
 		return ptr_valid;
 	}
 	else
 	{
+		led_switch(1);
 		return ptr_invalid;
 	}
 
@@ -221,6 +235,7 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 {
 	if(ptr==NULL)
 	{
+		led_switch(1);
 		return null_ptr;
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -268,6 +283,7 @@ cbuff_status cbuff_destroy(cbuff* ptr)
 {
 	if(ptr->cbuffptr==NULL)
 	{
+		led_switch(1);
 		return destroy_failed;
 	}
 	else

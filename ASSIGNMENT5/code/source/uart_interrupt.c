@@ -159,6 +159,7 @@ void uart_tx(char ch)
 
 void transmit_wait()
 {
+	led_switch(2);
 	while (!(UART0->S1 & UART_S1_TDRE_MASK));
 }
 
@@ -171,6 +172,7 @@ void transmit_wait()
 
 void recieve_wait()
 {
+	led_switch(0);
 	if (a==1)
 		Log_String(a,Recievewait,"Waiting for Character to receive");
 	while(!(UART0->S1 & UART_S1_RDRF_MASK));
@@ -254,6 +256,7 @@ void UART0_IRQHandler()
 	//Interrupt Handler for  Rx interrupt
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
+		led_switch(0);
 		ch1=UART0->D;
 		if(a==1)
 			Log_String(a,UART0IRQHandler,"RX Interrupt Detected");

@@ -57,7 +57,7 @@ void led_switch(int n)
 		GPIO_ClearPinsOutput(BOARD_LED_BLUE_GPIO, 1u << BOARD_LED_BLUE_GPIO_PIN);
 		GPIO_SetPinsOutput(BOARD_LED_RED_GPIO, 1u << BOARD_LED_RED_GPIO_PIN);
 		GPIO_SetPinsOutput(BOARD_LED_GREEN_GPIO, 1u << BOARD_LED_GREEN_GPIO_PIN);
-		delay(1000);
+		delay(100);
 		}
 		break;
 		// Switch LED RED ON and TURN OTHER LEDs OFF
@@ -67,7 +67,7 @@ void led_switch(int n)
 			GPIO_ClearPinsOutput(BOARD_LED_RED_GPIO, 1u << BOARD_LED_RED_GPIO_PIN);
 			GPIO_SetPinsOutput(BOARD_LED_BLUE_GPIO, 1u << BOARD_LED_BLUE_GPIO_PIN);
 			GPIO_SetPinsOutput(BOARD_LED_GREEN_GPIO, 1u << BOARD_LED_GREEN_GPIO_PIN);
-			delay(1000);
+			delay(100);
 	}
 			break;
 			// Switch LED GREEN ON and TURN OTHER LEDs OFF
@@ -76,7 +76,7 @@ void led_switch(int n)
 			GPIO_ClearPinsOutput(BOARD_LED_GREEN_GPIO, 1u << BOARD_LED_GREEN_GPIO_PIN);
 			GPIO_SetPinsOutput(BOARD_LED_RED_GPIO, 1u << BOARD_LED_RED_GPIO_PIN);
 			GPIO_SetPinsOutput(BOARD_LED_BLUE_GPIO, 1u << BOARD_LED_BLUE_GPIO_PIN);
-			delay(1000);
+			//delay(1000);
 	}
 			break;
 	case 3:
