@@ -9,7 +9,7 @@ source/uart_interrupt.o source/uart_interrupt.d: \
  ../drivers/fsl_common.h ../drivers/fsl_gpio.h ../board/peripherals.h \
  ../board/pin_mux.h ../board/clock_config.h ../CMSIS/MKL25Z4.h \
  ../utilities/fsl_debug_console.h ../source/time_stamp.h \
- ../source/logger.h
+ ../source/logger.h ../source/RGBled.h
 
 ../source/uart_interrrupt.h:
 
@@ -60,3 +60,5 @@ source/uart_interrupt.o source/uart_interrupt.d: \
 ../source/time_stamp.h:
 
 ../source/logger.h:
+
+../source/RGBled.h:

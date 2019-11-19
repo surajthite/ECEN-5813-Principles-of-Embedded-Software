@@ -39,14 +39,14 @@
 
 
 //Program Execution Control Variables
-#define ECHO 0
-#define APPLICATION 1
-#define TESTMODE 0
+#define ECHO 0						//Enable Echo mode of Operation
+#define APPLICATION 1				//Enable Application mode of Operation
+#define TESTMODE 0					//Enable Unit Testing Mode
 
 // Program Definitions
 
-#define buff_length (15)
-#define BAUDRATE (9600)
+#define buff_length (15)			//Set Buffer Size
+#define BAUDRATE (9600)				//Set Baud for UART communications
 
 /* TODO: insert other Global declarations here. */
 
@@ -61,7 +61,7 @@ bool rx_flag;
 bool rx_flag_1;
 extern uint8_t char_count[256];
 bool int_exit;
-extern modes a;
+extern modes a;				//Modes for logging
 
 /*
  * @brief   Application entry point.
@@ -85,10 +85,10 @@ int main(void) {
 
 	rx->cbuffptr = malloc(sizeof(int8_t) * buff_length);	//store the starting address of the Length in the base pointer of the structure
 
-	cbuff_status s = cbuff_init(rx,buff_length);
+	cbuff_init(rx,buff_length);		//Initialize circular buffer with length =15
 
-	Init_UART0(BAUDRATE*2);
-
+	Init_UART0(BAUDRATE*2);			//Initialize UART
+//Unit Testing
 #if TESTMODE
 	UCUNIT_Init();
 	UCUNIT_WriteString("\n**************************************");
@@ -103,14 +103,14 @@ int main(void) {
 	UCUNIT_Shutdown();
 
 #else
-
+//ECHO mode of Operation
 #if ECHO
 #if USE_UART_INTERRUPTS
 	if(a==1 || a==2)
 		Log_String(a,Main,"**** ECHO USING INTERRUPTS****");
 	while (1)
 	{
-		echo_function_interrupt();
+		echo_function_interrupt();	//Implementing Interrupts
 	}
 
 #else
@@ -118,32 +118,32 @@ int main(void) {
 		Log_String(a,Main,"**** ECHO USING POLLING****");
 	while (1)
 	{
-		char a = uart_rx();
-		echo_function_poll(a);
+		char a = uart_rx();	//Receive a character from receive polling
+		echo_function_poll(a);	//Implementing Polling
 	}
 
 #endif
 #endif
 
-#if APPLICATION
+#if APPLICATION		//Application Mode of Operation
 #if USE_UART_INTERRUPTS
 	if(a==1 || a==2)
 		Log_String(a,Main,"**** APPLICATION USING INTERRUPTS****");	//1
 	while (1)
 	{
-		application_int();
+		application_int();		//Application using Interrupts
 	}
 
-#else
+#else				//Application using polling
 	if(a==1 || a==2)
 		Log_String(a,Main,"**** APPLICATION USING POLLING****"); //1
 	while(1)
 	{
 		char a = uart_rx();
-		if(a == '.')
+		if(a == '.')			//Generate report on reception of null character
 		{
 			if(a==1 || a==2)
-				Log_String(a,Main,"****Generating Report*****");	//1
+				Log_String(a,Main,"****Generating Report*****");	//Generate report
 			generate_report();
 
 			//Clear the array where previous values were stored
@@ -157,15 +157,12 @@ int main(void) {
 			}
 			//	break;
 		}
-		application_poll(&a);
+		application_poll(&a);		//Application poll
 	}
 
 #endif
 #endif
 
-	//	if(a==1 || a==2)
-	//		Log_String(a,Main,"****Generating Report*****");	//1
-	//	generate_report();
 	return 0 ;
 #endif
 }
@@ -178,18 +175,18 @@ int main(void) {
  *******************************************************************************************************/
 void echo_function_interrupt()
 {
-	if(rx_flag ==1)
+	if(rx_flag ==1)		//Check for rx flag ie set in IRQ handler
 	{
 		if(a==1 || a==2)
 			Log_String(a,Echo_function_interrupt,"Character Received");	//1
-		uint8_t *current = rx->head;
-		current --;
+		uint8_t *current = rx->head;		//Access memory location of the circular buffer ->head
+		current --;  //Since head points to next empty memory location, decrement current to access last value stored
 		char time_buf[2048] = {0};
 		sprintf(time_buf, " \n %c \n", *current);
-		UART0_print_string(time_buf);
+		UART0_print_string(time_buf);		//Transmit character value via UART
 		if(a==1 || a==2)
 			Log_String(a,Echo_function_interrupt,"Character Transmitted");//1
-		rx_flag=0;
+		rx_flag=0; //Clear Rx flag
 	}
 }
 
@@ -201,12 +198,12 @@ void echo_function_interrupt()
  *******************************************************************************************************/
 void echo_function_poll(char a)
 {
-	if(rx_flag_1==1)
+	if(rx_flag_1==1)	//Check for Rx_flag_1 set upon reception of rx signal in receive wait state
 	{
 		if(a==1 || a==2)
 			Log_String(a,Echo_function_poll,"Character Received");//1
-		rx_flag_1=0;
-		uart_tx(a);
+		rx_flag_1=0;	//Clear the flag
+		uart_tx(a);	//Echo the value to the terminal screen
 		if(a==1 || a==2)
 			Log_String(2,Echo_function_poll,"Character Transmitted");//1
 	}
@@ -219,14 +216,14 @@ void echo_function_poll(char a)
  *******************************************************************************************************/
 void application_poll(uint8_t *ch)
 {
-	if(rx_flag_1==1)
+	if(rx_flag_1==1)	//Check for any value recieved
 	{
 		if(a==1 || a==2)
 			Log_String(a,Application_poll,"Character Received"); //1
-		rx_flag_1=0;
+		rx_flag_1=0;	//Clear the flag
 		if(a==1 || a==2)
 			Log_String(a,charactercount,"Character Count Incremented");	//1
-		character_count(ch);
+		character_count(ch);	//increment the character count for report generation
 		//printf("%d",char_count[51]);
 	}
 }
@@ -239,18 +236,18 @@ void application_poll(uint8_t *ch)
  *******************************************************************************************************/
 void application_int()
 {
-	if(rx_flag ==1)
+	if(rx_flag ==1)		//Check for rx_flag
 	{
 		if(a==1 || a==2)
 			Log_String(a,Application_int,"Character Received");//1
-		uint8_t *current = rx->head;
-		current --;
-		if(*current == '.')
+		uint8_t *current = rx->head;	//Store the head value in temporary pointer
+		current --;	//Point current to the memory location where the last char value was stored
+		if(*current == '.')	//Check for reception of '.' character
 		{
 
 			if(a==1 || a==2)
 				Log_String(a,Main,"****Generating Report*****");	//1
-			generate_report();
+			generate_report();	//Generate Report
 
 			//Clear the values where all previous values were stored
 			for (int i=65;i<=90;i++)
@@ -265,7 +262,7 @@ void application_int()
 		}
 		if(a==1 || a==2)
 			Log_String(a,charactercount,"Character Count Incremented"); //1
-		character_count(current);
+		character_count(current); //Increase the character count for report generation
 		rx_flag=0;
 	}
 }

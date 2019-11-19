@@ -1,5 +1,5 @@
-main.c:69:5:main	24	static
-main.c:179:6:echo_function_interrupt	2072	static
-main.c:202:6:echo_function_poll	16	static
-main.c:220:6:application_poll	16	static
-main.c:240:6:application_int	24	static
+main.c:69:5:main	16	static
+main.c:176:6:echo_function_interrupt	2072	static
+main.c:199:6:echo_function_poll	16	static
+main.c:217:6:application_poll	16	static
+main.c:237:6:application_int	24	static

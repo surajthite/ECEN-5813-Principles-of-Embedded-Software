@@ -2,9 +2,9 @@ circularbuff.c:13:14:cbuff_init	16	static
 circularbuff.c:51:14:cbuff_check_full	16	static
 circularbuff.c:79:14:cbuff_isempty	16	static
 circularbuff.c:104:14:cbuff_add	16	static
-circularbuff.c:147:14:cbuff_delete	16	static
-circularbuff.c:192:14:verify_init	16	static
-circularbuff.c:212:14:verify_ptr	16	static
-circularbuff.c:234:14:cbuff_resize	16	static
-circularbuff.c:265:6:cbuff_print	24	static
-circularbuff.c:282:14:cbuff_destroy	16	static
+circularbuff.c:145:14:cbuff_delete	16	static
+circularbuff.c:190:14:verify_init	16	static
+circularbuff.c:210:14:verify_ptr	16	static
+circularbuff.c:232:14:cbuff_resize	16	static
+circularbuff.c:263:6:cbuff_print	24	static
+circularbuff.c:280:14:cbuff_destroy	16	static

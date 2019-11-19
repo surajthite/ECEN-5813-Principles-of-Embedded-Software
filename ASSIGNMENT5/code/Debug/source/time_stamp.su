@@ -3,5 +3,5 @@ core_cm0plus.h:804:22:NVIC_SetPriority	24	static
 time_stamp.c:19:6:Init_SysTick	8	static
 time_stamp.c:35:6:SysTick_Handler	12	static
 time_stamp.c:47:10:get_current_time	12	static
-time_stamp.c:59:10:time_passed	32	static
-time_stamp.c:78:6:time_stamp_print	64	static
+time_stamp.c:60:10:time_passed	32	static
+time_stamp.c:79:6:time_stamp_print	64	static

@@ -8,8 +8,9 @@
 
 #include "uart_interrrupt.h"
 #include "logger.h"
+#include "RGBled.h"
 
-
+//Global Variables Access//
 char ch1;
 uint8_t deleted_element;
 extern cbuff *rx;
@@ -66,7 +67,7 @@ void Init_UART0(uint32_t baud_rate)
 	UART0->C1 = UART0_C1_LOOPS(0) | UART0_C1_M(0) | UART0_C1_PE(0);
 	// Don't invert transmit data, don't enable interrupts for errors
 	UART0->C3 = UART0_C3_TXINV(0) | UART0_C3_ORIE(0)| UART0_C3_NEIE(0)
-											| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
+													| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
 
 	// Clear error flags
 	UART0->S1 = UART0_S1_OR(1) | UART0_S1_NF(1) | UART0_S1_FE(1) | UART0_S1_PF(1);
@@ -109,7 +110,7 @@ void Init_UART0(uint32_t baud_rate)
  *******************************************************************************************************/
 char uart_rx(void)
 {
-	return UART0->D;
+	return UART0->D;	//Return value recieved at the recieve buffer
 }
 
 /*******************************************************************************************************
@@ -120,7 +121,7 @@ char uart_rx(void)
  *******************************************************************************************************/
 void uart_tx(char ch)
 {
-	UART0->D = ch;
+	UART0->D = ch;	//Store the character value in the transmit buffer
 }
 #else
 /*******************************************************************************************************
@@ -131,9 +132,9 @@ void uart_tx(char ch)
  *******************************************************************************************************/
 char uart_rx(void)
 {
-	recieve_wait();
-	rx_flag_1 =1;
-	return UART0->D;
+	recieve_wait();	//Wait for character to recieve
+	rx_flag_1 =1;	//Set the Flag
+	return UART0->D;	//Return the received data
 }
 
 /*******************************************************************************************************
@@ -144,8 +145,8 @@ char uart_rx(void)
  *******************************************************************************************************/
 void uart_tx(char ch)
 {
-	transmit_wait();
-	UART0->D = ch;
+	transmit_wait();	//Wait for Tx interrupt
+	UART0->D = ch;		//Store the character value in transmit buffer
 }
 #endif
 
@@ -159,8 +160,8 @@ void uart_tx(char ch)
 
 void transmit_wait()
 {
-	led_switch(2);
-	while (!(UART0->S1 & UART_S1_TDRE_MASK));
+	led_switch(2);	//Set LED to green
+	while (!(UART0->S1 & UART_S1_TDRE_MASK));	//Wait for Tx
 }
 
 /*******************************************************************************************************
@@ -172,10 +173,10 @@ void transmit_wait()
 
 void recieve_wait()
 {
-	led_switch(0);
+	led_switch(0);	//Switch led to Blue
 	if (a==1)
 		Log_String(a,Recievewait,"Waiting for Character to receive");
-	while(!(UART0->S1 & UART_S1_RDRF_MASK));
+	while(!(UART0->S1 & UART_S1_RDRF_MASK));	//Wait for Rx
 }
 
 /*******************************************************************************************************
@@ -189,9 +190,9 @@ void UART0_print_string(char *str)
 {
 	while(*str != '\0')
 	{
-		transmit_wait();
-		uart_tx(*str);
-		str++;
+		transmit_wait();	//Wait for Tx
+		uart_tx(*str);	//Transmit character of the string
+		str++;	//Increment the pointer
 	}
 }
 
@@ -205,9 +206,9 @@ void UART0_print_string(char *str)
 
 void UART0_print_int(uint16_t count)
 {
-	char str[10];
-	sprintf(str,"%d",count);
-	UART0_print_string(str);
+	char str[10];	//Temporary array
+	sprintf(str,"%d",count);	//Convert integer value to char
+	UART0_print_string(str);	//Transmit the string via UART
 }
 
 /*******************************************************************************************************
@@ -220,14 +221,14 @@ void UART0_print_int(uint16_t count)
 
 void putch_cbuff(char ch)
 {
-	cbuff_status overflow = cbuff_add(rx,ch);
+	cbuff_status overflow = cbuff_add(rx,ch);	//Check whether circular buffer is overflowed
 	if (overflow == cbuff_full)
 	{
 		if(a==1 || a==0)
 		{
 			Log_String(a,putchcbuff,"Buffer_Full"); //T
 			Log_String(a,putchcbuff,"Resizing the buffer");
-			cbuff_resize(rx,20);
+			cbuff_resize(rx,20); //Resize the buffer if overflow status recieved  = cbuff_full
 
 		}
 	}
@@ -244,26 +245,32 @@ void putch_cbuff(char ch)
 void UART0_IRQHandler()
 {
 	START_CRITICAL();			//START OF CRITICAL REGION
+	//Handling of Errors
+	if (UART0->S1 & (UART_S1_OR_MASK |UART_S1_NF_MASK | UART_S1_FE_MASK | UART_S1_PF_MASK))
+	{
+		//Change LED to RED
+		led_switch(1);
+		UART0->S1 |= UART0_S1_OR_MASK | UART0_S1_NF_MASK | UART0_S1_FE_MASK | UART0_S1_PF_MASK;
+		ch1 = UART0->D;
+	}
 
 	//Interrupt Handler for  transmit interrupt
 	if(UART0->S1 & UART0_S1_TDRE_MASK)
 	{
-		//		wait_flag = 1;
-		//		tx_flag = 1;
 		UART0->C2 &= ~(UART0_C2_TIE_MASK);
 
 	}
 	//Interrupt Handler for  Rx interrupt
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
-		led_switch(0);
-		ch1=UART0->D;
+		led_switch(0);	//Change LED to blue
+		ch1=UART0->D;	//store received character into variable
 		if(a==1)
 			Log_String(a,UART0IRQHandler,"RX Interrupt Detected");
-		putch_cbuff(ch1);
-		rx_flag = 1;
+		putch_cbuff(ch1); //Store recieved character into circular buffer
+		rx_flag = 1; //Set flag to 1
 	}
-	 END_CRITICAL();	//END OF CRITICAL REGION
+	END_CRITICAL();	//END OF CRITICAL REGION
 }
 
 /*******************************************************************************************************
@@ -280,8 +287,8 @@ void cbuff_string(char *str)
 	{
 		if (a==1)
 			Log_String(a,cbuffstring,"Adding String to Circular Buffer");
-		putch_cbuff(*str);
-		str++;
+		putch_cbuff(*str);	//Print character pointed by str
+		str++;	//Increment the pointer
 	}
 }
 /*******************************************************************************************************

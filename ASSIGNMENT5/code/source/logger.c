@@ -39,7 +39,7 @@ void Log_integer(modes current_mode,int16_t intval)
 ////// Logger for string ///////////
 void Log_String(uint8_t current_mode,fnnames mycurrent_function, char *str)
 {
-	time_stamp_print();
+	time_stamp_print();		//Print time stamp
 	if (current_mode ==0)
 	{
 	    char *s ="\t Test Mode: ";
