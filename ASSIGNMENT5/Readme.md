@@ -42,6 +42,7 @@ The code is tested on the enviornment below:
 * To execute the executable file simply type ./(filename) in linux gcc environment while click on debug (bug icon) and then resume button to execute the file on MCUXpresso.
 * Kindly use notepad++ for viewing .out files ,particularly for first output since they have been misaligned due to character "Space or Tab" encoding.
 * Set #define to 1 (ECHO) or 0 (APPLICATION)  respectively.
+* Set #define to 1 (TESTMODE ) or 0 (ECHO OR APPLICATION MODE)  respectively.
 * Set modes to Test, Debug or Status mode by setting the vale for variable 'a'  in logger.c file accordingly.  
 
 # DIFFICULTIES & OBSERVATIONS:
