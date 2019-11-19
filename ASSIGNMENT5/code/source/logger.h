@@ -6,7 +6,7 @@ typedef enum
 {
 	Test,
 	Debug,
-	Status
+	Normal
 }modes ;
 
 

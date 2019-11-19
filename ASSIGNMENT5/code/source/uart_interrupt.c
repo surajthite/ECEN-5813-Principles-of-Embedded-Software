@@ -9,6 +9,7 @@
 #include "uart_interrrupt.h"
 #include "logger.h"
 
+
 char ch1;
 uint8_t deleted_element;
 extern cbuff *rx;
@@ -29,6 +30,7 @@ int8_t rx_data;
  * Description :This function initializes the UART0 with selected baud rate as input
  * @input: BAUD
  * @Return : void
+ * Reference :https://github.com/alexander-g-dean/ESF/blob/master/Code/Chapter_8/Serial-Demo/inc/UART.h
  *******************************************************************************************************/
 void Init_UART0(uint32_t baud_rate)
 {
@@ -64,14 +66,14 @@ void Init_UART0(uint32_t baud_rate)
 	UART0->C1 = UART0_C1_LOOPS(0) | UART0_C1_M(0) | UART0_C1_PE(0);
 	// Don't invert transmit data, don't enable interrupts for errors
 	UART0->C3 = UART0_C3_TXINV(0) | UART0_C3_ORIE(0)| UART0_C3_NEIE(0)
-			| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
+											| UART0_C3_FEIE(0) | UART0_C3_PEIE(0);
 
 	// Clear error flags
 	UART0->S1 = UART0_S1_OR(1) | UART0_S1_NF(1) | UART0_S1_FE(1) | UART0_S1_PF(1);
 
 	// Try it a different way
 	UART0->S1 |= UART0_S1_OR_MASK | UART0_S1_NF_MASK |
-									UART0_S1_FE_MASK | UART0_S1_PF_MASK;
+			UART0_S1_FE_MASK | UART0_S1_PF_MASK;
 
 	// Send LSB first, do not invert received data
 	UART0->S2 = UART0_S2_MSBF(0) | UART0_S2_RXINV(0);
@@ -142,8 +144,8 @@ char uart_rx(void)
  *******************************************************************************************************/
 void uart_tx(char ch)
 {
-  transmit_wait();
-  UART0->D = ch;
+	transmit_wait();
+	UART0->D = ch;
 }
 #endif
 
@@ -169,7 +171,8 @@ void transmit_wait()
 
 void recieve_wait()
 {
-	Log_String(2,Recievewait,"Waiting for Character to receive");
+	if (a==1)
+		Log_String(a,Recievewait,"Waiting for Character to receive");
 	while(!(UART0->S1 & UART_S1_RDRF_MASK));
 }
 
@@ -218,7 +221,13 @@ void putch_cbuff(char ch)
 	cbuff_status overflow = cbuff_add(rx,ch);
 	if (overflow == cbuff_full)
 	{
-		Log_String(2,putchcbuff,"Buffer_Full"); //T
+		if(a==1 || a==0)
+		{
+			Log_String(a,putchcbuff,"Buffer_Full"); //T
+			Log_String(a,putchcbuff,"Resizing the buffer");
+			cbuff_resize(rx,20);
+
+		}
 	}
 }
 
@@ -232,13 +241,13 @@ void putch_cbuff(char ch)
 
 void UART0_IRQHandler()
 {
-	__disable_irq();
+	START_CRITICAL();			//START OF CRITICAL REGION
 
 	//Interrupt Handler for  transmit interrupt
 	if(UART0->S1 & UART0_S1_TDRE_MASK)
 	{
-//		wait_flag = 1;
-//		tx_flag = 1;
+		//		wait_flag = 1;
+		//		tx_flag = 1;
 		UART0->C2 &= ~(UART0_C2_TIE_MASK);
 
 	}
@@ -246,11 +255,12 @@ void UART0_IRQHandler()
 	if(UART0->S1 & UART0_S1_RDRF_MASK)
 	{
 		ch1=UART0->D;
-		Log_String(2,UART0IRQHandler,"RX Interrupt Detected");
+		if(a==1)
+			Log_String(a,UART0IRQHandler,"RX Interrupt Detected");
 		putch_cbuff(ch1);
 		rx_flag = 1;
 	}
-	__enable_irq();
+	 END_CRITICAL();	//END OF CRITICAL REGION
 }
 
 /*******************************************************************************************************
@@ -265,7 +275,8 @@ void cbuff_string(char *str)
 
 	while(*str != '\0')
 	{
-		Log_String(2,cbuffstring,"Adding String to Circular Buffer");
+		if (a==1)
+			Log_String(a,cbuffstring,"Adding String to Circular Buffer");
 		putch_cbuff(*str);
 		str++;
 	}

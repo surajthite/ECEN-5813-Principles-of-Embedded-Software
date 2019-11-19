@@ -1,0 +1,9 @@
+unitTest.c:19:6:test_cbuff_init	24	static
+unitTest.c:38:6:test_cbuff_add	24	static
+unitTest.c:58:6:test_cbuff_wrap_add	24	static
+unitTest.c:74:6:test_cbuff_full	24	static
+unitTest.c:89:6:test_delete	24	static
+unitTest.c:110:6:test_head_ptr	24	static
+unitTest.c:127:6:test_cuff_resize	24	static
+unitTest.c:144:6:test_cbuff_destroy	24	static
+unitTest.c:160:7:Testsuite_RunTests	8	static

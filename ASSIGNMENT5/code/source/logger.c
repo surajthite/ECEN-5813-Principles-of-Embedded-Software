@@ -7,7 +7,7 @@
 #include "circularbuff.h"
 #include "time_stamp.h"
 
-modes a = Test;   // setting mode
+modes a = Debug;   // setting mode
 
 fnnames fn_name;
 

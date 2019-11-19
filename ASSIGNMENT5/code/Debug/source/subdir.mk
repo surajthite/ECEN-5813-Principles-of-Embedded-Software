@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/RGBled.c \
+../source/System.c \
 ../source/char_count_update.c \
 ../source/circularbuff.c \
 ../source/logger.c \
@@ -12,10 +13,12 @@ C_SRCS += \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
 ../source/time_stamp.c \
-../source/uart_interrupt.c 
+../source/uart_interrupt.c \
+../source/unitTest.c 
 
 OBJS += \
 ./source/RGBled.o \
+./source/System.o \
 ./source/char_count_update.o \
 ./source/circularbuff.o \
 ./source/logger.o \
@@ -23,10 +26,12 @@ OBJS += \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
 ./source/time_stamp.o \
-./source/uart_interrupt.o 
+./source/uart_interrupt.o \
+./source/unitTest.o 
 
 C_DEPS += \
 ./source/RGBled.d \
+./source/System.d \
 ./source/char_count_update.d \
 ./source/circularbuff.d \
 ./source/logger.d \
@@ -34,7 +39,8 @@ C_DEPS += \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
 ./source/time_stamp.d \
-./source/uart_interrupt.d 
+./source/uart_interrupt.d \
+./source/unitTest.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

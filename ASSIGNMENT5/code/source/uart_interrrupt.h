@@ -19,7 +19,8 @@
 #define UART_OVERSAMPLE_RATE 	(16)
 #define BUS_CLOCK 				(24e6)
 #define SYS_CLOCK				(48e6)
-
+#define  START_CRITICAL()  __disable_irq()
+#define  END_CRITICAL()   __enable_irq()
 void tx_poll();
 void custom_printf(char *);
 void Init_UART0(uint32_t baud_rate);

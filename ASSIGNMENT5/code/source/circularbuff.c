@@ -2,6 +2,7 @@
 #include "circularbuff.h"
 #include "fsl_debug_console.h"
 
+extern modes a;
 /*******************************************************************************************************
  * Function Name:cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
  * Description :This Function Initializes the circular buffer
@@ -13,11 +14,11 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 {
 
 	if(ptr==NULL || length <=0)
-    {
+	{
 		return null_ptr;
-    }
+	}
 	else
-    {
+	{
 		if((ptr->cbuffptr)==NULL)
 		{
 			ptr->head=NULL;
@@ -35,7 +36,7 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 			ptr->tail=ptr->cbuffptr;
 			return  cbuff_init_success;
 		}
-    }
+	}
 }
 
 /*******************************************************************************************************
@@ -50,19 +51,19 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 	if(ptr==NULL)
 	{
 		return null_ptr;
-    }
+	}
 	else if ((ptr->cbuffptr)==NULL)
-    {
+	{
 		return buffer_NA;
-    }
+	}
 	else if ((ptr->count)==(ptr->size))
-    {
+	{
 		return cbuff_full;
-    }
+	}
 	else
-    {
+	{
 		return cbuff_not_full;
-    }
+	}
 }
 
 /*******************************************************************************************************
@@ -74,17 +75,17 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 cbuff_status cbuff_isempty(cbuff *ptr)
 {
 	if(ptr==NULL)
-    {
+	{
 		return null_ptr;
-    }
+	}
 	else if ((ptr->cbuffptr)==NULL)
-    {
+	{
 		return buffer_NA;
-    }
+	}
 	else if ((ptr->count)==0)
-    {
+	{
 		return cbuff_empty;
-    }
+	}
 }
 
 /*******************************************************************************************************
@@ -97,36 +98,36 @@ cbuff_status cbuff_isempty(cbuff *ptr)
 cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 {
 	if(ptr==NULL)
-    {
+	{
 		return null_ptr;
-    }
+	}
 	else if ((ptr->cbuffptr)==NULL)
-    {
+	{
 		return buffer_NA;
-    }
+	}
 	else if (cbuff_check_full(ptr)==cbuff_full)
-    {
+	{
 		return cbuff_full;
-    }
+	}
 	else if(ptr->head==((ptr->cbuffptr)+((ptr->size)-1)))
-    {
+	{
 		*(ptr->head)= val;
 
-		PRINTF("  WRAP ADD ::New Item Inserted at position %d location :: %d \r \n",ptr->head,*ptr->head);
+		printf("WRAP ADD ::New Item Inserted at position %d location :: %d \r \n",ptr->head,*ptr->head);
 		ptr->head=ptr->cbuffptr;
 		//ptr->head++;
 		ptr->count++;
 		//ptr->count =0;
 		return wrap_add;
-    }
+	}
 	else
-    {
+	{
 		*(ptr->head)=val;
-		PRINTF("New Item Inserted at position %d location :: %d  \r \n",ptr->head,*ptr->head);
+		printf("New Item Inserted at position %d location :: %d  \r \n",ptr->head,*ptr->head);
 		ptr->head++;
 		ptr->count++;
 		return cbuff_success;
-    }
+	}
 }
 
 /*******************************************************************************************************
@@ -138,33 +139,37 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 {
 	if(ptr==NULL)
-    {
+	{
 		return null_ptr;
-    }
+	}
 	else if ((ptr->cbuffptr)==NULL)
-    {
+	{
 		return buffer_NA;
-    }
+	}
 	else if (cbuff_isempty(ptr)==cbuff_empty)
-    {
+	{
 		return cbuff_empty;
-    }
+	}
 	else if(ptr->tail==((ptr->cbuffptr)+((ptr->size)-1)))
-    {
+	{
 		*(val)=*(ptr->tail);
 		ptr->tail=ptr->cbuffptr;
 		ptr->count--;
-		Log_String(2,cbuffdelete,"Wrap- Deleted");	//T
+		if(a==0 || a==1)
+			Log_String(a,cbuffdelete,"Wrap- Deleted");	//T
+
 		return wrap_remove;
-    }
+	}
 	else
-    {
+	{
 		*(val)=*(ptr->tail);
 		ptr->tail++;
 		ptr->count--;
-		Log_String(2,cbuffdelete,"Deleted");	//T
+		if(a==0 || a==1)
+			Log_String(a,cbuffdelete,"Deleted");	//T
+
 		return cbuff_success;
-    }
+	}
 
 }
 /*******************************************************************************************************
@@ -176,13 +181,13 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 cbuff_status verify_init(cbuff* ptr)
 {
 	if(ptr->cbuffptr==NULL)
-		{
-			return buffer_init_failed;
-		}
-		else
-		{
-			return buffer_init_success;
-		}
+	{
+		return buffer_init_failed;
+	}
+	else
+	{
+		return buffer_init_success;
+	}
 }
 
 /*******************************************************************************************************
@@ -192,9 +197,9 @@ cbuff_status verify_init(cbuff* ptr)
  * @Return : error status messages
  *******************************************************************************************************/
 
-cbuff_status verify_ptr(cbuff *ptr)
+cbuff_status verify_ptr(uint8_t *ptr1,cbuff *ptr)
 {
-	if(ptr >= ptr->cbuffptr && ptr <= ptr->head )
+	if(ptr1 >= ptr->cbuffptr && ptr1 <= ptr->head )
 	{
 		return ptr_valid;
 	}
@@ -215,21 +220,24 @@ cbuff_status verify_ptr(cbuff *ptr)
 cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 {
 	if(ptr==NULL)
-    {
+	{
 		return null_ptr;
-    }
+	}
 	else if ((ptr->cbuffptr)==NULL)
-    {
+	{
 		return buffer_NA;
-    }
+	}
 	else
-    {
-		Log_String(2,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
+	{
+		if(a==0 || a==1)
+			Log_String(a,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
 		ptr->newcbuffptr=(uint8_t *)realloc(ptr->cbuffptr,sizeof(uint8_t)*length);
 		ptr->cbuffptr=ptr->newcbuffptr;
+		//ptr->head =ptr->newcbuffptr;
 		ptr->size=length;
+		ptr->count =0;
 		return cbuff_success;
-    }
+	}
 }
 
 /*******************************************************************************************************
@@ -244,10 +252,28 @@ void cbuff_print(cbuff* ptr)
 	uint8_t *temp = ptr->tail;
 	for (int i=0;i<ptr->count;i++)
 	{
-		PRINTF(" \r \n value at position %x location :: %d ",temp,*temp);
+		printf(" \r \n value at position %x location :: %d ",temp,*temp);
 		temp++;
 	}
 }
+/*******************************************************************************************************
+ * Function Name:cbuff_status cbuff_destroy(cbuff* ptr)
+ * Description :This Function destroys the memory allocated for circular buffer
+ * @input: pointer to circular buffer and new length.
+ * @Return : error status messages
+ *******************************************************************************************************/
 
 
+cbuff_status cbuff_destroy(cbuff* ptr)
+{
+	if(ptr->cbuffptr==NULL)
+	{
+		return destroy_failed;
+	}
+	else
+	{
+		free(ptr->cbuffptr);
 
+		return destroy_pass;
+	}
+}

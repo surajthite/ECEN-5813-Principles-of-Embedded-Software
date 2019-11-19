@@ -34,16 +34,17 @@
  */
 /* TODO: insert other include files here. */
 #include "main.h"
-
+#include "unitTest.h"
 
 
 //Program Execution Control Variables
 #define ECHO 1
 #define APPLICATION 0
 #define TESTMODE 0
-// Program Definations
 
-#define buff_length (10)
+// Program Definitions
+
+#define buff_length (15)
 #define BAUDRATE (9600)
 
 /* TODO: insert other Global declarations here. */
@@ -59,7 +60,7 @@ bool rx_flag;
 bool rx_flag_1;
 extern uint8_t char_count[256];
 bool int_exit;
-
+extern modes a;
 
 /*
  * @brief   Application entry point.
@@ -72,36 +73,6 @@ int main(void) {
 	BOARD_InitBootPeripherals();
 	/* Init FSL debug console. */
 	BOARD_InitDebugConsole();
-	//	cbuff* a ;
-	//	a= malloc(sizeof(cbuff));
-	//	a->cbuffptr = malloc(sizeof(int8_t) * 10);
-	//	cbuff_init(a,10);
-	//
-	//	for (int i=0;i<8;i++)
-	//	{
-	//		cbuff_add(a,i);
-	//	}
-	//	printf("\n \r \n \n\n");
-	//	cbuff_print(a);
-	//	printf("\n \r \n \n\n");
-	//	uint8_t sar =0;
-	//	cbuff_delete(a,&sar);
-	//	cbuff_print(a);
-	//	printf("\n \r \n \n\n");
-	//	cbuff_add(a,5);
-	//	cbuff_print(a);
-	//	printf("\n \r \n \n\n");
-	//	cbuff_delete(a,&sar);
-	//	cbuff_print(a);
-	//	printf("\n \r \n \n\n");
-	//	cbuff_resize(a,20);
-	//	printf("\n \r \n \n\n");
-	//	for (int i=0;i<8;i++)
-	//		{
-	//			cbuff_add(a,i);
-	//		}
-	//	cbuff_print(a);
-	//cbuff* a ;
 
 	Init_SysTick();		//Initialize the Systick Timer
 
@@ -114,20 +85,32 @@ int main(void) {
 	Init_UART0(BAUDRATE*2);
 
 #if TESTMODE
+	UCUNIT_Init();
+	UCUNIT_WriteString("\n**************************************");
+	UCUNIT_WriteString("\nuCUnit demo application");
+	UCUNIT_WriteString("\nDate:     ");
+	UCUNIT_WriteString(__DATE__);
+	UCUNIT_WriteString("\nTime:     ");
+	UCUNIT_WriteString(__TIME__);
 
+	UCUNIT_WriteString("\n**************************************");
+	Testsuite_RunTests();
+	UCUNIT_Shutdown();
 
 #else
 
 #if ECHO
 #if USE_UART_INTERRUPTS
-	Log_String(2,Main,"**** ECHO USING INTERRUPTS****");
+	if(a==1 || a==2)
+		Log_String(a,Main,"**** ECHO USING INTERRUPTS****");
 	while (1)
 	{
 		echo_function_interrupt();
 	}
 
 #else
-	Log_String(2,Main,"**** ECHO USING POLLING****");
+	if(a==1 || a==2)
+		Log_String(a,Main,"**** ECHO USING POLLING****");
 	while (1)
 	{
 		char a = uart_rx();
@@ -139,30 +122,45 @@ int main(void) {
 
 #if APPLICATION
 #if USE_UART_INTERRUPTS
-	Log_String(2,Main,"**** APPLICATION USING INTERRUPTS****");	//1
-		while (int_exit ==0)
-		{
-			application_int();
-		}
+	if(a==1 || a==2)
+		Log_String(a,Main,"**** APPLICATION USING INTERRUPTS****");	//1
+	while (1)
+	{
+		application_int();
+	}
 
 #else
-		Log_String(2,Main,"**** APPLICATION USING POLLING****"); //1
-		while(1)
+	if(a==1 || a==2)
+		Log_String(a,Main,"**** APPLICATION USING POLLING****"); //1
+	while(1)
+	{
+		char a = uart_rx();
+		if(a == '.')
 		{
-			char a = uart_rx();
-			if(a == '.')
+			if(a==1 || a==2)
+				Log_String(a,Main,"****Generating Report*****");	//1
+			generate_report();
+
+			//Clear the array where previous values were stored
+			for (int i=65;i<=90;i++)
 			{
-				Log_String(2,Main,"****Application Mode  Terminated****"); //1
-				break;
+				char_count[i] =0;
 			}
-			application_poll(&a);
+			for (int i=97;i<=122;i++)
+			{
+				char_count[i] =0;
+			}
+			//	break;
 		}
+		application_poll(&a);
+	}
 
 #endif
 #endif
 
-	Log_String(2,Main,"****Generating Report*****");	//1
-	generate_report();
+	//	if(a==1 || a==2)
+	//		Log_String(a,Main,"****Generating Report*****");	//1
+	//	generate_report();
 	return 0 ;
 #endif
 }
@@ -177,13 +175,15 @@ void echo_function_interrupt()
 {
 	if(rx_flag ==1)
 	{
-		Log_String(2,Echo_function_interrupt,"Character Received");	//1
+		if(a==1 || a==2)
+			Log_String(a,Echo_function_interrupt,"Character Received");	//1
 		uint8_t *current = rx->head;
 		current --;
 		char time_buf[2048] = {0};
-		sprintf(time_buf, " \n %c", *current);
+		sprintf(time_buf, " \n %c \n", *current);
 		UART0_print_string(time_buf);
-		Log_String(2,Echo_function_interrupt,"Character Transmitted");//1
+		if(a==1 || a==2)
+			Log_String(a,Echo_function_interrupt,"Character Transmitted");//1
 		rx_flag=0;
 	}
 }
@@ -198,10 +198,12 @@ void echo_function_poll(char a)
 {
 	if(rx_flag_1==1)
 	{
-		Log_String(2,Echo_function_poll,"Character Received");//1
+		if(a==1 || a==2)
+			Log_String(a,Echo_function_poll,"Character Received");//1
 		rx_flag_1=0;
 		uart_tx(a);
-		Log_String(2,Echo_function_poll,"Character Transmitted");//1
+		if(a==1 || a==2)
+			Log_String(2,Echo_function_poll,"Character Transmitted");//1
 	}
 }
 /*******************************************************************************************************
@@ -214,9 +216,11 @@ void application_poll(uint8_t *ch)
 {
 	if(rx_flag_1==1)
 	{
-		Log_String(2,Application_poll,"Character Received"); //1
+		if(a==1 || a==2)
+			Log_String(a,Application_poll,"Character Received"); //1
 		rx_flag_1=0;
-		Log_String(2,charactercount,"Character Count Incremented");	//1
+		if(a==1 || a==2)
+			Log_String(a,charactercount,"Character Count Incremented");	//1
 		character_count(ch);
 		//printf("%d",char_count[51]);
 	}
@@ -232,17 +236,30 @@ void application_int()
 {
 	if(rx_flag ==1)
 	{
-		Log_String(2,Application_int,"Character Received");//1
+		if(a==1 || a==2)
+			Log_String(a,Application_int,"Character Received");//1
 		uint8_t *current = rx->head;
 		current --;
 		if(*current == '.')
 		{
-			int_exit =1;
-			Log_String(2,Application_int,"****Application Mode  Terminated****"); //1
+
+			if(a==1 || a==2)
+				Log_String(a,Main,"****Generating Report*****");	//1
+			generate_report();
+
+			//Clear the values where all previous values were stored
+			for (int i=65;i<=90;i++)
+			{
+				char_count[i] =0;
+			}
+			for (int i=97;i<=122;i++)
+			{
+				char_count[i] =0;
+			}
 
 		}
-
-		Log_String(2,charactercount,"Character Count Incremented"); //1
+		if(a==1 || a==2)
+			Log_String(a,charactercount,"Character Count Incremented"); //1
 		character_count(current);
 		rx_flag=0;
 	}
