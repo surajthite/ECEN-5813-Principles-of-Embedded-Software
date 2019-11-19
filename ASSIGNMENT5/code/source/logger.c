@@ -1,3 +1,9 @@
+/*
+ * logger.c
+ *
+ *  Created on: Nov 17, 2019
+ *      Author: SURAJ THITE & Atharv Desai
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>

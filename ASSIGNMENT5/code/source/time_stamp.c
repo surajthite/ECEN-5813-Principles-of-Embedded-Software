@@ -2,7 +2,7 @@
  * timer_stamp.c
  *
  *  Created on: Nov 17, 2019
- *      Author: SURAJ THITE
+ *      Author: SURAJ THITE ,Atrharv Desai
  */
 
 #include "time_stamp.h"

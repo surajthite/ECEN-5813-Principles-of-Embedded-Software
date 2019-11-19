@@ -40,8 +40,8 @@
 
 //Program Execution Control Variables
 #define ECHO 0						//Enable Echo mode of Operation
-#define APPLICATION 1				//Enable Application mode of Operation
-#define TESTMODE 0					//Enable Unit Testing Mode
+#define APPLICATION 0				//Enable Application mode of Operation
+#define TESTMODE 1					//Enable Unit Testing Mode
 
 // Program Definitions
 

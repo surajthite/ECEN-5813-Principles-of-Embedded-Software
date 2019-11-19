@@ -1,4 +1,9 @@
-
+/*
+ * circularbuff.c
+ *
+ *  Created on: Nov 17, 2019
+ *      Author: SURAJ THITE & Atharv Desai
+ */
 #include "circularbuff.h"
 #include "fsl_debug_console.h"
 #include "RGBled.h"
