@@ -5,14 +5,15 @@
 This is a readme file for the fifth project assignment in the Principles of Embedded Software Course for FALL '19. 
 The below enumerated files are contained in the repository 
 1) PES_Project5 
-i) Project Settings 
-ii) Build Targets 
-iii) Binaries 
-iv) Includes 
-v) CMSIS 
-vi) Board 
-vii) Drivers 
-viii) Source a) main.c & main.h 
+  i) Project Settings 
+  ii) Build Targets 
+  iii) Binaries 
+  iv) Includes 
+  v) CMSIS 
+  vi) Board 
+  vii) Drivers 
+  viii) Source
+             a) main.c & main.h 
              b) logger.c & logger.h 
              c) RGBled.c & RGBled.h 
              d) char_count_update.c & char_count_update.h 
