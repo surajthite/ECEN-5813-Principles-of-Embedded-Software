@@ -1,2 +1,2 @@
-wave.c:24:6:sine_lookup_generate	32	static
-wave.c:34:10:get_next_val	8	static
+wave.c:26:6:sine_lookup_generate	32	static
+wave.c:36:10:get_next_val	8	static

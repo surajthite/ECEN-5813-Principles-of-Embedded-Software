@@ -11,7 +11,7 @@
 
 #include "circularbuff.h"
 #include "time_stamp.h"
-
+#include "fsl_debug_console.h"
 modes a = Debug;   // setting mode
 
 fnnames fn_name;
@@ -59,116 +59,116 @@ void Log_String(uint8_t current_mode,fnnames mycurrent_function, char *str)
 	}
 
 
-	 PRINTF("\n \r %s ",str);
+	 PRINTF(" %s ",str);
 
 
 	if (mycurrent_function==cbuffinit)
 	{
-		UART0_print_string("\t Function: cbuffinit \n");
+		PRINTF("\t Function: cbuffinit \n");
 	}
 	else if (mycurrent_function==cbuffcheck_full)
 	{
-		UART0_print_string("\t Function: cbuffcheck_full \n");
+		PRINTF("\t Function: cbuffcheck_full \n");
 	}
 	else if (mycurrent_function==cbuffisempty)
 	{
-		UART0_print_string("\t Function: cbuffisempty \n");
+		PRINTF("\t Function: cbuffisempty \n");
 	}
 	else if (mycurrent_function==cbuffadd)
 	{
-		UART0_print_string("\t Function: cbuffadd \n");
+		PRINTF("\t Function: cbuffadd \n");
 	}
 	else if (mycurrent_function==cbuffdelete)
 	{
-		UART0_print_string("\t Function: cbuffdelete \n");
+		PRINTF("\t Function: cbuffdelete \n");
 	}
 	else if (mycurrent_function==verifyinit)
 	{
-		UART0_print_string("\t Function: verifyinit \n");
+		PRINTF("\t Function: verifyinit \n");
 	}
 	else if (mycurrent_function==verifyptr)
 	{
-		UART0_print_string("\t Function: verifyptr \n");
+		PRINTF("\t Function: verifyptr \n");
 	}
 	else if (mycurrent_function==cbuffresize)
 	{
-		UART0_print_string("\t Function: cbuffresize \n");
+		PRINTF("\t Function: cbuffresize \n");
 	}
 	else if (mycurrent_function==cbuffprint)
 	{
-		UART0_print_string("\t Function: cbuffprint \n");
+		PRINTF("\t Function: cbuffprint \n");
 	}
 	else if (mycurrent_function==InitUART0)
 	{
-		UART0_print_string("\t Function: InitUART0 \n");
+		PRINTF("\t Function: InitUART0 \n");
 	}
 	else if (mycurrent_function==Uartrx)
 	{
-		UART0_print_string("\t Function: Uartrx \n");
+		PRINTF("\t Function: Uartrx \n");
 	}
 	else if (mycurrent_function==Uarttx)
 	{
-		UART0_print_string("\t Function: 	Uarttx \n");
+		PRINTF("\t Function: 	Uarttx \n");
 	}
 	else if (mycurrent_function==Transmitwait)
 	{
-		UART0_print_string("\t Function:	Transmitwait \n");
+		PRINTF("\t Function:	Transmitwait \n");
 	}
 	else if (mycurrent_function==Recievewait)
 	{
-		UART0_print_string("\t Function:Recievewait \n");
+		PRINTF("\t Function:Recievewait \n");
 	}
 	else if (mycurrent_function==UART0printstring)
 	{
-		UART0_print_string("\t Function: UART0printstring \n");
+		PRINTF("\t Function: UART0printstring \n");
 	}
 	else if (mycurrent_function==UART0print_int)
 	{
-		UART0_print_string("\t Function: UART0print_int \n");
+		PRINTF("\t Function: UART0print_int \n");
 	}
 	else if (mycurrent_function==putchcbuff)
 	{
-		UART0_print_string("\t Function: putchcbuff \n");
+		PRINTF("\t Function: putchcbuff \n");
 	}
 	else if (mycurrent_function==UART0IRQHandler)
 	{
-		UART0_print_string("\t Function: UART0IRQHandler \n");
+		PRINTF("\t Function: UART0IRQHandler \n");
 	}
 	else if (mycurrent_function==cbuffstring)
 	{
-		UART0_print_string("\t Function: cbuffstring \n");
+		PRINTF("\t Function: cbuffstring \n");
 	}
 	else if (mycurrent_function==Getinfo)
 	{
-		UART0_print_string("\t Function: Getinfo \n");
+		PRINTF("\t Function: Getinfo \n");
 	}
 	else if(mycurrent_function==charactercount)
 	{
-		UART0_print_string("\t Function: charactercount \n");
+		PRINTF("\t Function: charactercount \n");
 	}
 	else if(mycurrent_function==Application_poll)
 		{
-			UART0_print_string("\t Function: Application_poll \n");
+		PRINTF("\t Function: Application_poll \n");
 		}
 	else if(mycurrent_function==Application_int)
 		{
-			UART0_print_string("\t Function: Application_int \n");
+		PRINTF("\t Function: Application_int \n");
 		}
 	else if(mycurrent_function==Echo_function_poll)
 			{
-				UART0_print_string("\t Function: echo_function_poll \n");
+		PRINTF("\t Function: echo_function_poll \n");
 			}
 	else if(mycurrent_function==Echo_function_interrupt)
 			{
-				UART0_print_string("\t Function: echo_function_interrupt \n");
+		PRINTF("\t Function: echo_function_interrupt \n");
 			}
 	else if(mycurrent_function==Generate_report)
 			{
-				UART0_print_string("\t Function: generate_report \n");
+		PRINTF("\t Function: generate_report \n");
 			}
 	else if(mycurrent_function==Main)
 			{
-				UART0_print_string("\t Function: Main \n");
+		PRINTF("\t Function: Main \n");
 			}
 
 }

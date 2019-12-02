@@ -92,7 +92,7 @@ void time_stamp_print()
 
 
 	sprintf(time_buf, "\n%02d:",  hrs);	//Convert hrs to string
-	PRINTF(time_buf);	//Send value over UART
+	PRINTF("\n \r %s",time_buf);	//Send value over UART
 	sprintf(time_buf, "%02d:",  min);//Convert min to string
 	PRINTF(time_buf);//Send value over UART
 	sprintf(time_buf, "%02d:",  sec);//Convert sec to string

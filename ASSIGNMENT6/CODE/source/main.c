@@ -80,7 +80,12 @@ static void hello_task(void *pvParameters)
 {
     for (;;)
     {
-        PRINTF("Hello world.\r\n");
+    	for(int i=0;i<100;i++)
+    	{
+        Log_String(1, 1, " Hello world.");
+        Log_String(1, 1, " Hello world2.");
+    	}
         vTaskSuspend(NULL);
     }
 }
+

@@ -7,6 +7,8 @@
 
 #include "wave.h"
 #include "fsl_debug_console.h"
+#include "logger.h"
+extern modes a;
 // from  dac adc example
 const static float digital_conversion_factor = 1/(3.30/4096.0);
 
