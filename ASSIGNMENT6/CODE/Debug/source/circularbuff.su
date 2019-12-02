@@ -1,0 +1,10 @@
+circularbuff.c:18:14:cbuff_init	16	static
+circularbuff.c:56:14:cbuff_check_full	16	static
+circularbuff.c:84:14:cbuff_isempty	16	static
+circularbuff.c:109:14:cbuff_add	16	static
+circularbuff.c:150:14:cbuff_delete	16	static
+circularbuff.c:195:14:verify_init	16	static
+circularbuff.c:215:14:verify_ptr	16	static
+circularbuff.c:237:14:cbuff_resize	16	static
+circularbuff.c:268:6:cbuff_print	24	static
+circularbuff.c:285:14:cbuff_destroy	16	static
