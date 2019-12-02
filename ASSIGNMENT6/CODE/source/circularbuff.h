@@ -14,10 +14,10 @@
 
 typedef struct
 {
-	uint8_t *cbuffptr;
-    uint8_t *newcbuffptr;
-    uint8_t *head;
-    uint8_t *tail;
+	uint32_t *cbuffptr;
+	uint32_t *newcbuffptr;
+	uint32_t *head;
+	uint32_t *tail;
     uint16_t size;
     uint8_t count;
 }cbuff;
@@ -51,8 +51,9 @@ cbuff_status cbuff_isempty(cbuff *ptr);
 cbuff_status cbuff_check_full(cbuff *ptr);
 cbuff_status cbuff_resize(cbuff *ptr,uint8_t length);
 void cbuff_print(cbuff* ptr);
-cbuff_status verify_ptr(uint8_t *ptr1,cbuff *ptr);
+cbuff_status verify_ptr(uint32_t *ptr1,cbuff *ptr);
 cbuff_status verify_init(cbuff* ptr);
 cbuff_status cbuff_destroy(cbuff* ptr);
+void cbuff_reset(cbuff* ptr);
 
 #endif /* CIRCULARBUFF_H_ */

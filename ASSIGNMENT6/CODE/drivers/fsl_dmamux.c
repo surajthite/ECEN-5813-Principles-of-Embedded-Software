@@ -28,88 +28,66 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* FreeRTOS kernel includes. */
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "timers.h"
-#include "dma.h"
-#include "circularbuff.h"
-/* Freescale includes. */
-#include "fsl_device_registers.h"
-#include "fsl_debug_console.h"
-#include "board.h"
+#include "fsl_dmamux.h"
 
-#include "pin_mux.h"
-#include "wave.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-/* Task priorities. */
-#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void hello_task(void *pvParameters);
+
+/*!
+ * @brief Get instance number for DMAMUX.
+ *
+ * @param base DMAMUX peripheral base address.
+ */
+static uint32_t DMAMUX_GetInstance(DMAMUX_Type *base);
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+/*! @brief Array to map DMAMUX instance number to base pointer. */
+static DMAMUX_Type *const s_dmamuxBases[] = DMAMUX_BASE_PTRS;
+
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+/*! @brief Array to map DMAMUX instance number to clock name. */
+static const clock_ip_name_t s_dmamuxClockName[] = DMAMUX_CLOCKS;
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*!
- * @brief Application entry point.
- */
-int main(void)
+static uint32_t DMAMUX_GetInstance(DMAMUX_Type *base)
 {
-    /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    cbuff *x;
-    cbuff *y;
-    x= malloc(sizeof(cbuff));
-    x->cbuffptr = malloc(sizeof(uint32_t) * 10);
-    cbuff_init(x,10);
+    uint32_t instance;
 
-    y= malloc(sizeof(cbuff));
-    y->cbuffptr = malloc(sizeof(uint32_t) * 10);
-    cbuff_init(y,10);
-
-    dma_init();
-
-    for (int i=20;i<30;i++)
+    /* Find the instance index from base address mappings. */
+    for (instance = 0; instance < ARRAY_SIZE(s_dmamuxBases); instance++)
     {
-    	cbuff_add(x,i);
+        if (s_dmamuxBases[instance] == base)
+        {
+            break;
+        }
     }
 
-    cbuff_print(x);
+    assert(instance < ARRAY_SIZE(s_dmamuxBases));
 
-    dma_transfer(x->cbuffptr, y->cbuffptr,10);
-
-    y->count = 10;
-    cbuff_print(y);
-
-//    sine_lookup_generate();
-//    xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 10, NULL, hello_task_PRIORITY, NULL);
-//    vTaskStartScheduler();
-//
-//    for (;;)
-//        ;
+    return instance;
 }
 
-/*!
- * @brief Task responsible for printing of "Hello world." message.
- */
-static void hello_task(void *pvParameters)
+void DMAMUX_Init(DMAMUX_Type *base)
 {
-    for (;;)
-    {
-    	for(int i=0;i<100;i++)
-    	{
-        Log_String(1, 1, " Hello world.");
-        Log_String(1, 1, " Hello world2.");
-    	}
-        vTaskSuspend(NULL);
-    }
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+    CLOCK_EnableClock(s_dmamuxClockName[DMAMUX_GetInstance(base)]);
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
+void DMAMUX_Deinit(DMAMUX_Type *base)
+{
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+    CLOCK_DisableClock(s_dmamuxClockName[DMAMUX_GetInstance(base)]);
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
+}

@@ -31,7 +31,7 @@ void Log_integer(modes current_mode,int16_t intval)
 {
 	if(current_mode != 1)      // since no integers to print in normal status mode
 	//printf("%d ",intval); // Print the  data
-	PRINTF(intval);
+	PRINTF("%d",intval);
 }
 
 

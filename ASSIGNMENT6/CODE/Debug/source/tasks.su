@@ -1,0 +1,3 @@
+tasks.c:19:6:tasks_init	32	static
+tasks.c:43:6:dac_task	24	static
+tasks.c:51:6:adc_task	24	static

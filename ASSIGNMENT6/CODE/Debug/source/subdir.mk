@@ -6,30 +6,36 @@
 C_SRCS += \
 ../source/adc_dac.c \
 ../source/circularbuff.c \
+../source/dma.c \
 ../source/logger.c \
 ../source/main.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
+../source/tasks.c \
 ../source/time_stamp.c \
 ../source/wave.c 
 
 OBJS += \
 ./source/adc_dac.o \
 ./source/circularbuff.o \
+./source/dma.o \
 ./source/logger.o \
 ./source/main.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
+./source/tasks.o \
 ./source/time_stamp.o \
 ./source/wave.o 
 
 C_DEPS += \
 ./source/adc_dac.d \
 ./source/circularbuff.d \
+./source/dma.d \
 ./source/logger.d \
 ./source/main.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
+./source/tasks.d \
 ./source/time_stamp.d \
 ./source/wave.d 
 

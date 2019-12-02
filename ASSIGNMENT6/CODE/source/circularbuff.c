@@ -20,14 +20,12 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 
 	if(ptr==NULL || length <=0)
 	{
-		led_switch(1);	//Change LED to red upon error
 		return null_ptr;
 	}
 	else
 	{
 		if((ptr->cbuffptr)==NULL)
 		{
-			led_switch(1);	//Change LED to red upon error
 			ptr->head=NULL;	//Initialize  head pointer to NULL
 			ptr->tail=NULL;	//Initialize tail pointer to NULL
 			ptr->count=0;	//Initialize count to zero
@@ -36,7 +34,7 @@ cbuff_status cbuff_init(cbuff *ptr, uint16_t length)
 		}
 		else
 		{
-			ptr->cbuffptr= (uint8_t*)malloc(sizeof(uint8_t)*length);	//Allocate memory for the circular buffer
+			ptr->cbuffptr= (uint32_t*)malloc(sizeof(uint32_t)*length);	//Allocate memory for the circular buffer
 			ptr->size= length;	//Set size of the buffer
 			ptr->count=0;	//Initialize count to zero
 			ptr->head=ptr->cbuffptr;	//Set head to base address
@@ -57,7 +55,6 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 {
 	if(ptr==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
 		return null_ptr;	//Return Status
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -66,7 +63,7 @@ cbuff_status cbuff_check_full(cbuff *ptr)
 	}
 	else if ((ptr->count)==(ptr->size))
 	{
-		led_switch(1);		//Change LED to red upon error
+
 		return cbuff_full;	//Return Status
 	}
 	else
@@ -85,7 +82,7 @@ cbuff_status cbuff_isempty(cbuff *ptr)
 {
 	if(ptr==NULL)
 	{
-		led_switch(1);			//Change LED to red upon error
+
 		return null_ptr;		//Return Status
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -94,7 +91,7 @@ cbuff_status cbuff_isempty(cbuff *ptr)
 	}
 	else if ((ptr->count)==0)
 	{
-		led_switch(1);			//Change LED to red upon error
+
 		return cbuff_empty;		//Return Status
 	}
 }
@@ -110,7 +107,6 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 {
 	if(ptr==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
 		return null_ptr;	//Return Status
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -119,14 +115,13 @@ cbuff_status cbuff_add(cbuff *ptr, uint8_t val)
 	}
 	else if (cbuff_check_full(ptr)==cbuff_full)
 	{
-		led_switch(1);			//Change LED to red upon error
 		return cbuff_full;		//Return Status
 	}
 	else if(ptr->head==((ptr->cbuffptr)+((ptr->size)-1)))	//handle Wrap add Condition
 	{
 		*(ptr->head)= val;	//Store the value at the address pointed by the head
 
-		printf("WRAP ADD ::New Item Inserted at position %d location :: %d \r \n",ptr->head,*ptr->head);
+		printf("WRAP ADD ::New Item Inserted at position %x location :: %d \r \n",ptr->head,*ptr->head);
 		ptr->head=ptr->cbuffptr;	//Initialize the head to base address of the cbuff pointer
 		ptr->count++;	//Increment count
 		return wrap_add;	//Return Status
@@ -151,17 +146,16 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 {
 	if(ptr==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
+
 		return null_ptr;	//Return Status
 	}
 	else if ((ptr->cbuffptr)==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
+
 		return buffer_NA;	//Return Status
 	}
 	else if (cbuff_isempty(ptr)==cbuff_empty)
 	{
-		led_switch(1);		//Change LED to red upon error
 		return cbuff_empty;	//Return Status
 	}
 	else if(ptr->tail==((ptr->cbuffptr)+((ptr->size)-1)))	//Handle Wrap remove condition
@@ -196,7 +190,6 @@ cbuff_status verify_init(cbuff* ptr)
 {
 	if(ptr->cbuffptr==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
 		return buffer_init_failed;	//Return status
 	}
 	else
@@ -212,7 +205,7 @@ cbuff_status verify_init(cbuff* ptr)
  * @Return : error status messages
  *******************************************************************************************************/
 
-cbuff_status verify_ptr(uint8_t *ptr1,cbuff *ptr)
+cbuff_status verify_ptr(uint32_t *ptr1,cbuff *ptr)
 {
 	if(ptr1 >= ptr->cbuffptr && ptr1 <= ptr->head )	//Check whether passed pointer is in the range of circular buffer
 	{
@@ -221,7 +214,6 @@ cbuff_status verify_ptr(uint8_t *ptr1,cbuff *ptr)
 	}
 	else
 	{
-		led_switch(1);			//Change LED to red upon error
 		return ptr_invalid;		//Return Status
 	}
 
@@ -238,7 +230,6 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 {
 	if(ptr==NULL)
 	{
-		led_switch(1);	//Change LED to red upon error
 		return null_ptr;	//Return Status
 	}
 	else if ((ptr->cbuffptr)==NULL)
@@ -249,7 +240,7 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 	{
 		if(a==0 || a==1)
 			Log_String(a,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
-		ptr->newcbuffptr=(uint8_t *)realloc(ptr->cbuffptr,sizeof(uint8_t)*length);	//Reallocate the memory
+		ptr->newcbuffptr=(uint32_t *)realloc(ptr->cbuffptr,sizeof(uint32_t)*length);	//Reallocate the memory
 		ptr->cbuffptr=ptr->newcbuffptr;	//Set pointer value to new memory location pointed by newcbuff pointer
 		//ptr->head =ptr->newcbuffptr;
 		ptr->size=length;	//Set size to length passed
@@ -267,7 +258,7 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 
 void cbuff_print(cbuff* ptr)
 {
-	uint8_t *temp = ptr->tail;	//Temporary pointer to store address of Out location(Tail) of the circular buffer
+	uint32_t *temp = ptr->tail;	//Temporary pointer to store address of Out location(Tail) of the circular buffer
 	for (int i=0;i<ptr->count;i++)
 	{
 		printf(" \r \n value at position %x location :: %d ",temp,*temp);	//Print the elements of circular buffer
@@ -286,7 +277,6 @@ cbuff_status cbuff_destroy(cbuff* ptr)
 {
 	if(ptr->cbuffptr==NULL)
 	{
-		led_switch(1);		//Change LED to red upon error
 		return destroy_failed;	//Return Status
 	}
 	else
@@ -295,4 +285,12 @@ cbuff_status cbuff_destroy(cbuff* ptr)
 
 		return destroy_pass;	//Return Status
 	}
+}
+
+
+void cbuff_reset(cbuff* ptr)
+{
+	ptr->count=0;//Initialize count to zero
+	ptr->head=ptr->cbuffptr;//Set head to base address
+	ptr->tail=ptr->cbuffptr;//Set tail to base address
 }
