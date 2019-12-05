@@ -1,3 +1,5 @@
-tasks.c:19:6:tasks_init	32	static
-tasks.c:43:6:dac_task	24	static
-tasks.c:51:6:adc_task	24	static
+fsl_dma.h:558:20:DMA_StartTransfer	16	static
+tasks.c:48:6:updateTime	16	static
+tasks.c:72:6:dac_task	32	static
+tasks.c:108:6:adc_task	40	static
+tasks.c:155:6:start_dsp	80	static

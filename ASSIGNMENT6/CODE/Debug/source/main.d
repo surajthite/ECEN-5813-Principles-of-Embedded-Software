@@ -11,7 +11,8 @@ source/main.o source/main.d: ../source/main.c ../freertos/FreeRTOS.h \
  ../drivers/fsl_dmamux.h ../source/tasks.h ../source/circularbuff.h \
  ../utilities/fsl_debug_console.h ../drivers/fsl_common.h \
  ../board/board.h ../board/clock_config.h ../drivers/fsl_gpio.h \
- ../board/pin_mux.h ../source/wave.h
+ ../board/pin_mux.h ../source/wave.h ../source/adc_dac.h \
+ ../drivers/fsl_dac.h ../drivers/fsl_adc16.h ../board/clock_config.h
 
 ../freertos/FreeRTOS.h:
 
@@ -80,3 +81,11 @@ source/main.o source/main.d: ../source/main.c ../freertos/FreeRTOS.h \
 ../board/pin_mux.h:
 
 ../source/wave.h:
+
+../source/adc_dac.h:
+
+../drivers/fsl_dac.h:
+
+../drivers/fsl_adc16.h:
+
+../board/clock_config.h:

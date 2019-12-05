@@ -14,7 +14,7 @@ const static float digital_conversion_factor = 1/(3.30/4096.0);
 
 uint32_t count = 0;
 
-static uint32_t sine[NUM_OF_SAMPLES] = {0};
+static uint16_t sine[NUM_OF_SAMPLES] = {0};
 
 //float sine_function(float x)
 //{
@@ -33,7 +33,7 @@ void sine_lookup_generate()
 	}
 }
 
-uint32_t get_next_val()
+uint16_t get_next_val()
 {
 
 	return sine[count++ % NUM_OF_SAMPLES];

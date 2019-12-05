@@ -11,7 +11,7 @@ C_SRCS += \
 ../source/main.c \
 ../source/mtb.c \
 ../source/semihost_hardfault.c \
-../source/tasks.c \
+../source/task1.c \
 ../source/time_stamp.c \
 ../source/wave.c 
 
@@ -23,7 +23,7 @@ OBJS += \
 ./source/main.o \
 ./source/mtb.o \
 ./source/semihost_hardfault.o \
-./source/tasks.o \
+./source/task1.o \
 ./source/time_stamp.o \
 ./source/wave.o 
 
@@ -35,7 +35,7 @@ C_DEPS += \
 ./source/main.d \
 ./source/mtb.d \
 ./source/semihost_hardfault.d \
-./source/tasks.d \
+./source/task1.d \
 ./source/time_stamp.d \
 ./source/wave.d 
 

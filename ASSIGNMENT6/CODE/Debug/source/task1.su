@@ -1,0 +1,6 @@
+fsl_dma.h:558:20:DMA_StartTransfer	16	static
+task1.c:48:6:updateTime	16	static
+task1.c:74:6:dac_task	32	static
+task1.c:110:6:adc_task	48	static
+task1.c:160:6:start_dsp	80	static
+task1.c:205:6:DMA_Callback	16	static

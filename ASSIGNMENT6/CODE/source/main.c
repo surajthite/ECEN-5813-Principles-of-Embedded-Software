@@ -35,23 +35,33 @@
 #include "timers.h"
 #include "dma.h"
 #include "circularbuff.h"
+
 /* Freescale includes. */
+
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "board.h"
 
 #include "pin_mux.h"
 #include "wave.h"
+
+#include "adc_dac.h"
+
+#include "tasks.h"
+//cbuff *adc_buffer;
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
+#define APPLICATION 1
 /* Task priorities. */
-#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
+//#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
+
+TimerHandle_t DACTimerHandle = NULL;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static void hello_task(void *pvParameters);
+QueueHandle_t ADC_BUFF;
 
 /*******************************************************************************
  * Code
@@ -61,55 +71,58 @@ static void hello_task(void *pvParameters);
  */
 int main(void)
 {
-    /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    cbuff *x;
-    cbuff *y;
-    x= malloc(sizeof(cbuff));
-    x->cbuffptr = malloc(sizeof(uint32_t) * 10);
-    cbuff_init(x,10);
+	/* Init board hardware. */
+	BOARD_InitPins();
+	BOARD_BootClockRUN();
+	BOARD_InitDebugConsole();
 
-    y= malloc(sizeof(cbuff));
-    y->cbuffptr = malloc(sizeof(uint32_t) * 10);
-    cbuff_init(y,10);
+//	adc_buffer= malloc(sizeof(cbuff));
+//	adc_buffer->cbuffptr = malloc(sizeof(uint32_t) * 64);
+//	cbuff_init(adc_buffer,64);
+//	PRINTF("\n \r ADC buffer  Initialized");
 
-    dma_init();
 
-    for (int i=20;i<30;i++)
-    {
-    	cbuff_add(x,i);
-    }
+	//
+	//    dma_init();
+	//
+	//    for (int i=20;i<30;i++)
+	//    {
+	//    	cbuff_add(x,i);
+	//    }
+	//
+	//    cbuff_print(x);
+	//
+	//    dma_transfer(x->cbuffptr, y->cbuffptr,10);
+	//
+	//    y->count = 10;
+	//
+	//    cbuff_print(y);
 
-    cbuff_print(x);
+	initialize_dac();
 
-    dma_transfer(x->cbuffptr, y->cbuffptr,10);
+	initialize_adc();
 
-    y->count = 10;
-    cbuff_print(y);
+	dma_init();
 
-//    sine_lookup_generate();
-//    xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 10, NULL, hello_task_PRIORITY, NULL);
-//    vTaskStartScheduler();
-//
-//    for (;;)
-//        ;
+	sine_lookup_generate();
+	ADC_BUFF = xQueueCreate(64,sizeof(uint16_t));
+	PRINTF("\n \r xQueue Create Initialized Initialized");
+	xTaskCreate(updateTime,( portCHAR *)"upadte_time", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+	xTaskCreate(dac_task,( portCHAR *)"dactask", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+
+#if APPLICATION
+
+	xTaskCreate(adc_task,( portCHAR *)"readadc", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
+
+#endif
+
+	vTaskStartScheduler();
+
+
+	while (1)
+	{
+
+	}
 }
 
-/*!
- * @brief Task responsible for printing of "Hello world." message.
- */
-static void hello_task(void *pvParameters)
-{
-    for (;;)
-    {
-    	for(int i=0;i<100;i++)
-    	{
-        Log_String(1, 1, " Hello world.");
-        Log_String(1, 1, " Hello world2.");
-    	}
-        vTaskSuspend(NULL);
-    }
-}
 

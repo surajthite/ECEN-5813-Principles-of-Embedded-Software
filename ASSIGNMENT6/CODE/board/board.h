@@ -53,22 +53,6 @@
 #define BOARD_DEBUG_UART_BAUDRATE 115200
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
 
-/* Define the port interrupt number for the board switches */
-#define BOARD_SW1_GPIO GPIOA
-#define BOARD_SW1_PORT PORTA
-#define BOARD_SW1_GPIO_PIN 20U
-#define BOARD_SW1_IRQ PORTA_IRQn
-#define BOARD_SW1_IRQ_HANDLER PORTA_IRQHandler
-#define BOARD_SW1_NAME "SW1"
-
-/* Switch simulated by wire */
-#define BOARD_SW2_GPIO GPIOA
-#define BOARD_SW2_PORT PORTA
-#define BOARD_SW2_GPIO_PIN 17U
-#define BOARD_SW2_IRQ PORTA_IRQn
-#define BOARD_SW2_IRQ_HANDLER PORTA_IRQHandler
-#define BOARD_SW2_NAME "SW2"
-
 /*! @brief Indexes of the TSI channels for on board electrodes */
 #define BOARD_TSI_ELECTRODE_1 9U
 #define BOARD_TSI_ELECTRODE_2 10U

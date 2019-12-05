@@ -19,7 +19,7 @@ void initialize_dac();
 
 void initialize_adc();
 
-void dac_write(uint32_t val);
+void dac_write(uint16_t val);
 
 uint32_t adc_read();
 #endif /* ADC_DAC_H_ */

@@ -20,7 +20,7 @@
 
 void sine_lookup_generate();
 
-uint32_t get_next_val();
+uint16_t get_next_val();
 
 
 #endif /* WAVE_H_ */
