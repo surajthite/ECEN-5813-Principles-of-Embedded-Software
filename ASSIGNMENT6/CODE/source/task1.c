@@ -5,6 +5,9 @@
  *      Author: SURAJ THITE
  */
 
+#include "main.h"
+
+
 #include "tasks.h"
 
 #include "circularbuff.h"
@@ -20,7 +23,7 @@
 uint8_t adc_read_count;
 TaskHandle_t DSP_Handle;
 SemaphoreHandle_t led_mutex;
-#define APPLICATION 1
+
 //extern cbuff *adc_buffer;
 extern QueueHandle_t ADC_BUFF;
 QueueHandle_t DSP_BUFF;
@@ -45,51 +48,26 @@ extern dma_transfer_config_t transferConfig;
 volatile bool g_Transfer_Done;
 #define RES (3.3/4096)
 
-void updateTime(void *p)
-{
-	while(1)
-	{
-//
-		PRINTF("\n \r UPDATE TIME TASK");
-	//	time.tenths++;
-//		if(time.tenths >=10)
-//		{
-//			time.tenths = 0;
-//			time.seconds++;
-//			if(time.seconds >= 60)
-//			{
-//				time.seconds = 0;
-//				time.minutes++;
-//
-//				if(time.minutes >= 60)
-//				{
-//					time.minutes = 0;
-//					time.hours++;
-//				}
-//			}
-//		}
-	//	vTaskDelay(100);
-	}
-}
+
 void dac_task(void *x)
 {
 
 	while(1)
 	{
-//#if APPLICATION
-//		if(led_mutex != NULL)
-//		{
-//			if(xSemaphoreTake(led_mutex,(TickType_t) 100) == pdTRUE)
-//			{
-//				//SET RGB LED
-//				xSemaphoreGive( led_mutex );
-//			}
-//		}
-//#else
-//		//Set RGB led
-//#endif
+#if APPLICATION
+		if(led_mutex != NULL)
+		{
+			if(xSemaphoreTake(led_mutex,(TickType_t) 100) == pdTRUE)
+			{
+				//SET RGB LED
+				xSemaphoreGive( led_mutex );
+			}
+		}
+#else
+		//Set RGB led
+#endif
 
-		PRINTF("\n \r ********** Writing to  DAC***********");
+	//	PRINTF("\n \r ********** Writing to  DAC***********");
 
 		uint16_t val = get_next_val();
 
@@ -98,11 +76,11 @@ void dac_task(void *x)
 		dac_write(val);
 
 
-		PRINTF("\n \r ********** Waiting for Next Task***********");
+	//	PRINTF("\n \r ********** Waiting for Next Task***********");
 
-		//vTaskDelay(100);
+		vTaskDelay(100);
 
-		PRINTF("\n \r ********** Writing Next Value to DAC***********");
+	//	PRINTF("\n \r ********** Writing Next Value to DAC***********");
 	}
 }
 
@@ -111,30 +89,29 @@ void adc_task(void *p)
 {
 	while (1)
 	{
-//		adc_read_count++;
-//		if(adc_read_count > 4)
-//		{
-//			xSemaphoreGive(led_mutex);
-//		}
+		adc_read_count++;
+		if(adc_read_count > 4)
+		{
+			xSemaphoreGive(led_mutex);
+		}
 
 		uint16_t val = adc_read();
 
 		PRINTF(" \n \r Reading %d from  the ADC.", val);
 
 //		cbuff_add(adc_buffer,val);
-//
 //		 cbuff_print(adc_buffer);
-		PRINTF("\n \r Writing value to the Queue");
-		if(!(xQueueSend(ADC_BUFF,(void *)&val,0) == pdTRUE))
+	//	PRINTF("\n \r Writing value to the Queue");
+		if((xQueueSend(ADC_BUFF,(void *)&val,0) != 1))
 
 		{
 
-			PRINTF("\n \r ************DMA TRANSFER STARTED**************");
+			//PRINTF("\n \r ************DMA TRANSFER STARTED**************");
 			adc_read_count = 0;
 
-		//	xSemaphoreTake(led_mutex,(TickType_t) 100);
+			xSemaphoreTake(led_mutex,(TickType_t) 100);
 			//RGBLED_set(led, false, false,true);
-			//		        	Logger_logString(logger, "Queue is Full", "readADC", STATUS_LEVEL);
+
 			DMA_CreateHandle(&g_DMA_Handle, DMA0, DMA_CHANNEL);
 			DMA_SetCallback(&g_DMA_Handle, DMA_Callback, NULL);
 			DMA_PrepareTransfer(&transferConfig,ADC_BUFF->pcHead,2,buffer,2,64*2,kDMA_MemoryToMemory);
@@ -147,13 +124,15 @@ void adc_task(void *p)
 				}
 				PRINTF("\n \r ************DMA TRANSFER SUCCESSFUL**************");
 
+			PRINTF("\n \r ************Queue Reset**************");
 
 			xQueueReset(ADC_BUFF);
 
-			xTaskCreate(start_dsp,( portCHAR *)"DSP started", configMINIMAL_STACK_SIZE, NULL, 5, &DSP_Handle);
+			xTaskCreate(start_dsp,( portCHAR *)"DSP started", configMINIMAL_STACK_SIZE, NULL, 1, &DSP_Handle);
 		}
-
-		//vTaskDelay(100);
+		PRINTF("\n \r ********** Waiting for Next Task***********");
+		vTaskDelay(100);
+		PRINTF("\n \r ********** Reading Next Value to ADC***********");
 	}
 }
 
@@ -189,8 +168,9 @@ void start_dsp(void *p)
 		    }
 		    std_dev = sqrtf(stdDevSum/64.0);
 		  //  Logger_logString(logger, "DSP REPORT", "doDSP", STATUS_LEVEL);
-		    PRINTF("Cycle Number: %d\n\r",cycle);
-		    PRINTF("Min: %f\n\rMax: %f\n\rAvg: %f\n\rStd Dev: %f\n\r",min,max,average,std_dev);
+		    PRINTF("\n \r Generating Report");
+		    PRINTF("\n \rIteration: %d \n \r",cycle);
+		    PRINTF("Min: %f\n\rMax: %f\n\rAvg: %f\n\rStandard Dev: %f\n\r",min,max,average,std_dev);
 		    cycle++;
 		    if(cycle > 4)
 		    {

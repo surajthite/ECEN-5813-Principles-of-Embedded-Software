@@ -5,11 +5,12 @@ source/dma.o source/dma.d: ../source/dma.c ../source/dma.h \
  ../CMSIS/core_cmFunc.h ../CMSIS/system_MKL25Z4.h \
  ../CMSIS/MKL25Z4_features.h ../drivers/fsl_clock.h \
  ../drivers/fsl_dmamux.h ../source/tasks.h ../freertos/FreeRTOS.h \
- ../source/FreeRTOSConfig.h ../freertos/projdefs.h ../freertos/portable.h \
- ../freertos/deprecated_definitions.h ../freertos/portmacro.h \
- ../freertos/mpu_wrappers.h ../freertos/task.h ../freertos/list.h \
- ../freertos/timers.h ../freertos/task.h ../source/circularbuff.h \
- ../utilities/fsl_debug_console.h ../drivers/fsl_common.h
+ ../freertos/FreeRTOSConfig.h ../freertos/projdefs.h \
+ ../freertos/portable.h ../freertos/deprecated_definitions.h \
+ ../freertos/portmacro.h ../freertos/mpu_wrappers.h ../freertos/task.h \
+ ../freertos/list.h ../freertos/timers.h ../freertos/task.h \
+ ../source/circularbuff.h ../utilities/fsl_debug_console.h \
+ ../drivers/fsl_common.h
 
 ../source/dma.h:
 
@@ -41,7 +42,7 @@ source/dma.o source/dma.d: ../source/dma.c ../source/dma.h \
 
 ../freertos/FreeRTOS.h:
 
-../source/FreeRTOSConfig.h:
+../freertos/FreeRTOSConfig.h:
 
 ../freertos/projdefs.h:
 

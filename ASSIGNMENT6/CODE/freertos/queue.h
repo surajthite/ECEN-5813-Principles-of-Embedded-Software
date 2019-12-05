@@ -78,12 +78,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-/**
- * Type by which queues are referenced.  For example, a call to xQueueCreate()
- * returns an QueueHandle_t variable that can then be used as a parameter to
- * xQueueSend(), xQueueReceive(), etc.
+/*
+ * Definition of the queue used by the scheduler.
+ * Items are queued by copy, not reference.  See the following link for the
+ * rationale: http://www.freertos.org/Embedded-RTOS-Queues.html
  */
 typedef struct QueueDefinition
 {
@@ -122,10 +120,12 @@ typedef struct QueueDefinition
 
 } xQUEUE;
 
-/* The old xQUEUE name is maintained above then typedefed to the new Queue_t
-name below to enable the use of older kernel aware debuggers. */
-typedef xQUEUE Queue_t;
-typedef xQUEUE  * QueueHandle_t;
+/**
+ * Type by which queues are referenced.  For example, a call to xQueueCreate()
+ * returns an QueueHandle_t variable that can then be used as a parameter to
+ * xQueueSend(), xQueueReceive(), etc.
+ */
+typedef xQUEUE * QueueHandle_t;
 
 /**
  * Type by which queue sets are referenced.  For example, a call to

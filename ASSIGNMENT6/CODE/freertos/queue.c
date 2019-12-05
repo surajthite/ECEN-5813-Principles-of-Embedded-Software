@@ -122,12 +122,11 @@ zero. */
 	#define queueYIELD_IF_USING_PREEMPTION() portYIELD_WITHIN_API()
 #endif
 
-/*
- * Definition of the queue used by the scheduler.
- * Items are queued by copy, not reference.  See the following link for the
- * rationale: http://www.freertos.org/Embedded-RTOS-Queues.html
- */
 
+
+/* The old xQUEUE name is maintained above then typedefed to the new Queue_t
+name below to enable the use of older kernel aware debuggers. */
+typedef xQUEUE Queue_t;
 
 /*-----------------------------------------------------------*/
 

@@ -35,7 +35,7 @@
 #include "timers.h"
 #include "dma.h"
 #include "circularbuff.h"
-
+#include "main.h"
 /* Freescale includes. */
 
 #include "fsl_device_registers.h"
@@ -48,16 +48,19 @@
 #include "adc_dac.h"
 
 #include "tasks.h"
+
+#include "semphr.h"
+
 //cbuff *adc_buffer;
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APPLICATION 1
 /* Task priorities. */
 //#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
 
-TimerHandle_t DACTimerHandle = NULL;
+//TimerHandle_t DACTimerHandle = NULL;
+extern SemaphoreHandle_t led_mutex;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -69,34 +72,15 @@ QueueHandle_t ADC_BUFF;
 /*!
  * @brief Application entry point.
  */
+
+
 int main(void)
 {
-	/* Init board hardware. */
-	BOARD_InitPins();
-	BOARD_BootClockRUN();
+
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitBootPeripherals();
 	BOARD_InitDebugConsole();
-
-//	adc_buffer= malloc(sizeof(cbuff));
-//	adc_buffer->cbuffptr = malloc(sizeof(uint32_t) * 64);
-//	cbuff_init(adc_buffer,64);
-//	PRINTF("\n \r ADC buffer  Initialized");
-
-
-	//
-	//    dma_init();
-	//
-	//    for (int i=20;i<30;i++)
-	//    {
-	//    	cbuff_add(x,i);
-	//    }
-	//
-	//    cbuff_print(x);
-	//
-	//    dma_transfer(x->cbuffptr, y->cbuffptr,10);
-	//
-	//    y->count = 10;
-	//
-	//    cbuff_print(y);
 
 	initialize_dac();
 
@@ -105,14 +89,18 @@ int main(void)
 	dma_init();
 
 	sine_lookup_generate();
+
 	ADC_BUFF = xQueueCreate(64,sizeof(uint16_t));
+
 	PRINTF("\n \r xQueue Create Initialized Initialized");
-	xTaskCreate(updateTime,( portCHAR *)"upadte_time", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
-	xTaskCreate(dac_task,( portCHAR *)"dactask", configMINIMAL_STACK_SIZE, NULL, 3, NULL);
+
+	led_mutex = xSemaphoreCreateMutex();
+
+	xTaskCreate(dac_task,( portCHAR *)"dactask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
 #if APPLICATION
 
-	xTaskCreate(adc_task,( portCHAR *)"readadc", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
+	xTaskCreate(adc_task,( portCHAR *)"readadc", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
 
 #endif
 

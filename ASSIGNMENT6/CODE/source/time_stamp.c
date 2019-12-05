@@ -32,10 +32,10 @@ void Init_SysTick(void)
  * @Return : void
  *******************************************************************************************************/
 //Event handler for SystickTimer for 15 seconds delay
-void SysTick_Handler()
-{
-	current_time++;	//Increment the gloabl variable
-}
+//void SysTick_Handler()
+//{
+//	current_time++;	//Increment the gloabl variable
+//}
 
 /*******************************************************************************************************
  * Function Name:uint64_t get_current_time()
