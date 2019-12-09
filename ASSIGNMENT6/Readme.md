@@ -58,6 +58,6 @@ The code is tested on the environment below:
 * Log statements to be removed in application mode ,in order to minimise the task time. Same can be enabled in Debug mode. 
 
 
-#Extra Credits Implemented 
+# Extra Credits Implemented 
 * Created FreeRTOS Queues in order to store values received in ADC and DMA transfer to DSP buffer 
 * Implemented Semaphore and Mutex Free RTOS APIs.
