@@ -4,6 +4,12 @@
  *  Created on: Nov 17, 2019
  *      Author: SURAJ THITE & Atharv Desai
  */
+/*
+ * logger.c
+ *
+ *  Created on: Nov 17, 2019
+ *      Author: SURAJ THITE & Atharv Desai
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -12,6 +18,8 @@
 #include "circularbuff.h"
 #include "time_stamp.h"
 #include "fsl_debug_console.h"
+
+
 modes a = Debug;   // setting mode
 
 fnnames fn_name;
@@ -62,114 +70,27 @@ void Log_String(uint8_t current_mode,fnnames mycurrent_function, char *str)
 	 PRINTF(" %s ",str);
 
 
-	if (mycurrent_function==cbuffinit)
+	if (mycurrent_function==dactask)
 	{
-		PRINTF("\t Function: cbuffinit \n");
+		PRINTF("\t Function: DACtask \n");
 	}
-	else if (mycurrent_function==cbuffcheck_full)
+	else if (mycurrent_function==adctask)
 	{
-		PRINTF("\t Function: cbuffcheck_full \n");
+		PRINTF("\t Function: ADCtask \n");
 	}
-	else if (mycurrent_function==cbuffisempty)
+	else if (mycurrent_function==startdsp)
 	{
-		PRINTF("\t Function: cbuffisempty \n");
+		PRINTF("\t Function: Start Dsp \n");
 	}
-	else if (mycurrent_function==cbuffadd)
+	else if (mycurrent_function==dmacallback)
 	{
-		PRINTF("\t Function: cbuffadd \n");
+		PRINTF("\t Function: DMA Callback \n");
 	}
-	else if (mycurrent_function==cbuffdelete)
+	else if (mycurrent_function==Main)
 	{
-		PRINTF("\t Function: cbuffdelete \n");
-	}
-	else if (mycurrent_function==verifyinit)
-	{
-		PRINTF("\t Function: verifyinit \n");
-	}
-	else if (mycurrent_function==verifyptr)
-	{
-		PRINTF("\t Function: verifyptr \n");
-	}
-	else if (mycurrent_function==cbuffresize)
-	{
-		PRINTF("\t Function: cbuffresize \n");
-	}
-	else if (mycurrent_function==cbuffprint)
-	{
-		PRINTF("\t Function: cbuffprint \n");
-	}
-	else if (mycurrent_function==InitUART0)
-	{
-		PRINTF("\t Function: InitUART0 \n");
-	}
-	else if (mycurrent_function==Uartrx)
-	{
-		PRINTF("\t Function: Uartrx \n");
-	}
-	else if (mycurrent_function==Uarttx)
-	{
-		PRINTF("\t Function: 	Uarttx \n");
-	}
-	else if (mycurrent_function==Transmitwait)
-	{
-		PRINTF("\t Function:	Transmitwait \n");
-	}
-	else if (mycurrent_function==Recievewait)
-	{
-		PRINTF("\t Function:Recievewait \n");
-	}
-	else if (mycurrent_function==UART0printstring)
-	{
-		PRINTF("\t Function: UART0printstring \n");
-	}
-	else if (mycurrent_function==UART0print_int)
-	{
-		PRINTF("\t Function: UART0print_int \n");
-	}
-	else if (mycurrent_function==putchcbuff)
-	{
-		PRINTF("\t Function: putchcbuff \n");
-	}
-	else if (mycurrent_function==UART0IRQHandler)
-	{
-		PRINTF("\t Function: UART0IRQHandler \n");
-	}
-	else if (mycurrent_function==cbuffstring)
-	{
-		PRINTF("\t Function: cbuffstring \n");
-	}
-	else if (mycurrent_function==Getinfo)
-	{
-		PRINTF("\t Function: Getinfo \n");
-	}
-	else if(mycurrent_function==charactercount)
-	{
-		PRINTF("\t Function: charactercount \n");
-	}
-	else if(mycurrent_function==Application_poll)
-		{
-		PRINTF("\t Function: Application_poll \n");
-		}
-	else if(mycurrent_function==Application_int)
-		{
-		PRINTF("\t Function: Application_int \n");
-		}
-	else if(mycurrent_function==Echo_function_poll)
-			{
-		PRINTF("\t Function: echo_function_poll \n");
-			}
-	else if(mycurrent_function==Echo_function_interrupt)
-			{
-		PRINTF("\t Function: echo_function_interrupt \n");
-			}
-	else if(mycurrent_function==Generate_report)
-			{
-		PRINTF("\t Function: generate_report \n");
-			}
-	else if(mycurrent_function==Main)
-			{
 		PRINTF("\t Function: Main \n");
-			}
+	}
+
 
 }
 

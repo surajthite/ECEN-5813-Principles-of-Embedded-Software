@@ -36,6 +36,7 @@
 #include "dma.h"
 #include "circularbuff.h"
 #include "main.h"
+#include "logger.h"
 /* Freescale includes. */
 
 #include "fsl_device_registers.h"
@@ -50,7 +51,8 @@
 #include "tasks.h"
 
 #include "semphr.h"
-
+#include "RGBled.h"
+#include "time_stamp.h"
 //cbuff *adc_buffer;
 
 /*******************************************************************************
@@ -59,13 +61,15 @@
 /* Task priorities. */
 //#define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
 
-//TimerHandle_t DACTimerHandle = NULL;
+TimerHandle_t DAC_Timer_Handle = NULL;
 extern SemaphoreHandle_t led_mutex;
+extern uint64_t current_time;
+extern modes a;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 QueueHandle_t ADC_BUFF;
-
+void DAC_write_task(TimerHandle_t xTimer);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -88,21 +92,38 @@ int main(void)
 
 	dma_init();
 
-	sine_lookup_generate();
+	RGB_init();
 
+	RGB_OFF();
+
+	sine_lookup_generate();
+#if APPLICATION ==0
+	//	initialize_dac();
+
+	//DAC_Timer_Handle = xTimerCreate("DAC_Write_Timer", (1000 / portTICK_PERIOD_MS), pdTRUE, 0, DAC_write_task  );
+	DAC_Timer_Handle = xTimerCreate("DAC_Write_Timer", 100, pdTRUE, 0, DAC_write_task  );
+	xTimerStart(DAC_Timer_Handle, 0);
+	vTaskStartScheduler();
+
+	while(1)
+	{
+
+	}
+
+#else
 	ADC_BUFF = xQueueCreate(64,sizeof(uint16_t));
 
 	PRINTF("\n \r xQueue Create Initialized Initialized");
 
 	led_mutex = xSemaphoreCreateMutex();
 
+	//xTaskCreate(TimerUpdate,( portCHAR *)"UpdateTimervalue", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+
 	xTaskCreate(dac_task,( portCHAR *)"dactask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
 
-#if APPLICATION
+
 
 	xTaskCreate(adc_task,( portCHAR *)"readadc", configMINIMAL_STACK_SIZE, NULL, 0, NULL);
-
-#endif
 
 	vTaskStartScheduler();
 
@@ -111,6 +132,23 @@ int main(void)
 	{
 
 	}
+#endif
 }
 
-
+/*******************************************************************************************************
+ * Function Name:void DAC_write_task(TimerHandle_t xTimer)
+ * Description :This is a callback task function to write generated sine wave values into the DAC pin
+ * @input:  TimerHandle_t xTimer
+ * @Return : void
+ *******************************************************************************************************/
+void DAC_write_task(TimerHandle_t xTimer)
+{
+	current_time++;
+	uint16_t val = get_next_val();
+//	PRINTF(" \n \r Writing %d to the DAC.", val);
+	led_switch(0);
+	dac_write(val);
+	RGB_OFF();
+if(a==Debug)
+	Log_String(a, Main, "Value Written to DAC");
+}

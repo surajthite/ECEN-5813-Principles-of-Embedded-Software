@@ -8,7 +8,7 @@
 #include "time_stamp.h"
 #include "fsl_debug_console.h"
 #include "MKL25Z4.h"
-static uint64_t current_time = 0;
+uint64_t current_time = 0;
 static const uint64_t time_max = ~0;
 /*******************************************************************************************************
  * Function Name:Init_SysTick(void)

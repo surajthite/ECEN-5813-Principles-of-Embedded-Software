@@ -1,7 +1,7 @@
 fsl_dac.h:210:20:DAC_Enable	16	static
 fsl_adc16.h:382:20:ADC16_EnableHardwareTrigger	16	static
 fsl_adc16.h:500:24:ADC16_GetChannelConversionValue	16	static
-adc_dac.c:16:6:initialize_dac	8	static
-adc_dac.c:30:6:initialize_adc	8	static
-adc_dac.c:48:6:dac_write	16	static
-adc_dac.c:55:10:adc_read	8	static
+adc_dac.c:25:6:initialize_dac	8	static
+adc_dac.c:45:6:initialize_adc	8	static
+adc_dac.c:69:6:dac_write	16	static
+adc_dac.c:81:10:adc_read	8	static

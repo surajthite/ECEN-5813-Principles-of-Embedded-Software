@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../source/RGBled.c \
 ../source/adc_dac.c \
 ../source/circularbuff.c \
 ../source/dma.c \
@@ -16,6 +17,7 @@ C_SRCS += \
 ../source/wave.c 
 
 OBJS += \
+./source/RGBled.o \
 ./source/adc_dac.o \
 ./source/circularbuff.o \
 ./source/dma.o \
@@ -28,6 +30,7 @@ OBJS += \
 ./source/wave.o 
 
 C_DEPS += \
+./source/RGBled.d \
 ./source/adc_dac.d \
 ./source/circularbuff.d \
 ./source/dma.d \

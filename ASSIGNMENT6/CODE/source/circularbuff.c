@@ -164,7 +164,7 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 		ptr->tail=ptr->cbuffptr;	//point tail to the base address of the circular buffer
 		ptr->count--;	//Decrement count
 		if(a==0 || a==1)
-			Log_String(a,cbuffdelete,"Wrap- Deleted");	//T
+			//Log_String(a,cbuffdelete,"Wrap- Deleted");	//T
 
 		return wrap_remove;	//Return Status
 	}
@@ -174,7 +174,7 @@ cbuff_status cbuff_delete(cbuff *ptr, uint8_t *val)
 		ptr->tail++;	//Increment the tail address
 		ptr->count--;	//Decrement count
 		if(a==0 || a==1)
-			Log_String(a,cbuffdelete,"Deleted");	//T
+			//Log_String(a,cbuffdelete,"Deleted");	//T
 
 		return cbuff_success;	//Return status
 	}
@@ -239,7 +239,7 @@ cbuff_status cbuff_resize(cbuff *ptr,uint8_t length)
 	else
 	{
 		if(a==0 || a==1)
-			Log_String(a,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
+			//Log_String(a,cbuffresize,"*** EXTRA CREDIT: BUFFER RESIZED***");	//T
 		ptr->newcbuffptr=(uint32_t *)realloc(ptr->cbuffptr,sizeof(uint32_t)*length);	//Reallocate the memory
 		ptr->cbuffptr=ptr->newcbuffptr;	//Set pointer value to new memory location pointed by newcbuff pointer
 		//ptr->head =ptr->newcbuffptr;

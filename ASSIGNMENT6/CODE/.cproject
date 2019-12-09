@@ -218,7 +218,7 @@
 								<option id="gnu.c.link.option.noshared.1352126280" name="No shared libraries (-static)" superClass="gnu.c.link.option.noshared" useByScannerDiscovery="false"/>
 								<option id="gnu.c.link.option.libs.341178704" name="Libraries (-l)" superClass="gnu.c.link.option.libs" useByScannerDiscovery="false"/>
 								<option id="gnu.c.link.option.paths.1385573682" name="Library search path (-L)" superClass="gnu.c.link.option.paths" useByScannerDiscovery="false"/>
-								<option id="gnu.c.link.option.ldflags.862576335" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false"/>
+								<option id="gnu.c.link.option.ldflags.862576335" name="Linker flags" superClass="gnu.c.link.option.ldflags" useByScannerDiscovery="false" value="" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.link.option.other.595931121" name="Other options (-Xlinker [option])" superClass="gnu.c.link.option.other" useByScannerDiscovery="false" valueType="stringList">
 									<listOptionValue builtIn="false" value="-Map=&quot;${BuildArtifactFileBaseName}.map&quot;"/>
 									<listOptionValue builtIn="false" value="--gc-sections"/>

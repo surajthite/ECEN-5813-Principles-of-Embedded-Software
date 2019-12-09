@@ -9,7 +9,7 @@
 #define MAIN_H_
 
 
-#define APPLICATION 1
+#define APPLICATION 0
 
 
 #endif /* MAIN_H_ */
